@@ -1,0 +1,6 @@
+This file is to be ammended after either programmer finishes one of their designated topics. They should include the date, the topic name, and a short note on how it went, so that overall team progress can be monitored.
+
+Anael: 
+17/09/2026: I have completed the quadratics topic file. There is room for a bit of improvement so maybe I will do it tomorrow.
+
+Rapheal:

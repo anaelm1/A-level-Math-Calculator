@@ -1,0 +1,38 @@
+This project is being done in collaboration by two teammates. The project guidelines are  specified in this file to achieve consistant functions.
+
+The calculator is divided based on topics. Each person will work on predecided topics.
+
+The division: (Currently being finalized)
+
+
+
+
+
+Each topic will have its separate file in the format "topicname.py":
+    Each file will contain one main function and helper functions (optional):
+        1. The main function will follow a strict input parameter system and will return a dictionary with all the details.
+        2. The final function should not contain any form of inputs and outputs instead only parameters and returns.
+        3. At the top of each function's file, the programmer will describe the topic, all the subtopics, the parameters format, the return dictionary format. 
+        4. It is also important to specify what each global variable is doing in the functions, so that the other programmer can work on it if need be.
+        5. Read the quadratics file as an example. 
+        6. sympy fucntion is great for this project. Follow its formatting across all files. For powers use ** instead of ^, so that in the future in main.py the ** can easily written as x powers etc.
+        7. Overview the sympy librar online. 
+
+Before shipping each week, both programmers will review and throughly test each others functions to make sure the program works perfectly. 
+
+After all topics' functions are written, the main.py file will be implemented. This file will contain the connection between all the functions.
+
+It is not required for all functions to be implemented together instead they can be implemented one at a time depending on their requirments. 
+
+To maintain program integrety, both programmers will git pull and push after they complete one topic. 
+The code to do that is: 
+    git pull 
+    git add . 
+    git commit -m"Completed this func ___ -Anael" 
+    git push origin main
+
+They will also add the new topic to the progress.txt file with a quick message on the function. 
+
+There is a requirments.txt file as well which contains all the libraries which we will use. It will be written to in the end. 
+
+These are the guidelines so far but they will be ammended as we figure out the project managment.
