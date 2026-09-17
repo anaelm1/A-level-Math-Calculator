@@ -7,40 +7,35 @@ The subtopics are:
     4. Discriminant Analysis 
     5. Hidden / Disguised Quadratics
     6. Grapher of Quadratic curve (THIS WILL BE IMPLEMENTED IN THE GRAPHING CALC PART. IT IS NOT WORTH IT TO IMPLEMENT IT HERE)
-The parameters are (method, a, b, c). 5 is exception where parameter is (eqn_str) method is an integer from 1 to 6 as the topics are numbered above. 
-The eqn format should be outputted before taking user input. It is ax^2 + bx + c
+The parameters are (method, equation_str).
 The return dictionary contains:
 {
 'solved' : bool (true/false),
 'error' : string
-'roots': [{"type": string (real/complex), "value": float, "exact_value": string }, {"type": string, "value": float, "exact_value": string }],
-'vertex': {x,y},
-'discriminant': {"value": float, "nature": string},
-"completed_square": {"a": integer, "h": integer, "k": integer, "form": string},
-"factored_form": string
+'answer_string': string(can be a list or a dict as well)
 }
 
-The roots are a list inside a dictionary value. To acess one, access the return dictionary's roots value, select a list index, access the value's value for the root.
-Similar style is used for the completing square but no list. 
-
-If either of the dict values are not required, they will be set to None. 
 ''' 
 
 import math
 import sympy as sp #for factoring
+from sympy import pi, E, I, S, Number #for rounding
+
 x = sp.Symbol('x')
 
+def ReturnDict(solved = True, error = None, answer_string = None):
+    return {'solved': solved, 'error': error, 'answer_string': answer_string}
 
 def Quadratics(method, equation_str): #TODO: I need to make the input more user friendly as the current formating is ** for powers
     poly = sp.Poly(equation_str, x)
     a = float(poly.coeff_monomial(x**2))
     b = float(poly.coeff_monomial(x**1))
     c = float(poly.coeff_monomial(x**0))
-
-    print(a, b, c)
     
     if method != 5 and a == 0: 
-        output = {"solved": False, "error": "a cannot be 0 as that is a linear equation."}
+        return ReturnDict(solved = False, error = "A cannot be 0 as that is a linear equation.")
+
+    
     if method == 1:
         return MiddleTerm(a, b, c)
     elif method == 2:
@@ -52,24 +47,26 @@ def Quadratics(method, equation_str): #TODO: I need to make the input more user 
     elif method == 5: 
         return DisguisedQuadratic(equation_str) 
 
-def MiddleTerm(a, b, c):
+def MiddleTerm(a, b, c): #answerstring[0] = factored form, answerstring[1] = root1, answerstring[2] = root 2...
     expression = a*x**2 + b*x + c
     factored = sp.factor(expression)
 
     if factored == expression: #sp returns same eqn if no factoring possible
-        output = {"solved": False, "error": "No factoring possible. Quadratic formula option is available."}
-        return output
+        return ReturnDict(solved = False, error = "No factoring possible. Quadratic formula option is available.")
     else:
         solutions = sp.solveset(expression, x)
-        roots = []
+        answer = []
+        answer.append(factored)
         for solution in solutions:
-            roots.append({"type": "real", "value": float(solution.evalf(3)), "exact_value": solution}) #evalf is a part of sp that converts fraction into decimal as the specified 3 digit number
-        output = {"solved": True, "roots": roots, "factored_form": factored}
-        return output
+            answer.append(f"x = {solution}") 
+        return ReturnDict(solved = True, answer_string = answer)
 
-def CompletingSquare(a, b, c):
+def CompletingSquare(a, b, c): #answerstring[0] = factored form, answerstring[1] = a, answerstring[2] = h, answerstring[2] = k
     h = -b / (2 * a)
+    h = round(h, 3)
+
     k = c - (b**2 / (4 * a))
+    k = round(k, 3)
 
     if h >= 0:
         h_str = f"- {abs(h)}"
@@ -90,49 +87,42 @@ def CompletingSquare(a, b, c):
     elif a == -1:
         target_a = "-"
     else: 
-        target_a = ""
+        target_a = str(round(a,3))
 
     form = f"{target_a}(x {h_str})^2{k_str}"
 
-    output = {'solved' : True, 'error' : None, "completed_square": {"a": a, "h": h, "k": k, "form": form}}
+    return ReturnDict(solved = True, answer_string = [form, a, h, k])
 
-    return output
-
-def QuadraticFormula(a, b, c):
+def QuadraticFormula(a, b, c): #answerstring[0] = root1, answerstring[1] = root2...
     expression = a*x**2 + b*x + c
     solutions = sp.solveset(expression, x)
-    roots = []
+    answers = []
     for solution in solutions:
         if (b ** 2) - (4 * a * c) < 0:
-            roots.append({"type": "complex", "value": None, "exact_value": solution}) #evalf is a part of sp that converts fraction into decimal as the specified 3 digit number
+            answers.append(f"x = {solution}")
         else:
-            roots.append({"type": "real", "value": float(solution.evalf(3)), "exact_value": solution})
-    output = {"solved": True, "roots": roots}
-    return output
+            answers.append(f"x = {float(solution.evalf(3))} OR x = {solution}")
+    return ReturnDict(solved = True, answer_string = answers)
 
-def Discriminant(a, b, c):
+
+def Discriminant(a, b, c): #answerstring[0] = discriminant value, answerstring[1] = nature...
     D = (b ** 2) - (4 * a * c)
-    data_roots = QuadraticFormula(a, b, c)
-    roots = data_roots["roots"]
     if D > 0: 
-        output = {"solved": True, "roots": roots, "discriminant": {"value": D, "nature": "Real"}}
-        return output
+        return ReturnDict(solved = True, answer_string = [f"discriminant = {round(D, 3)}", "Nature = Real"])
     if D == 0: 
-        output = {"solved": True, "roots": roots, "discriminant": {"value": D, "nature": "Real and Equal"}}
-        return output
+        return ReturnDict(solved = True, answer_string = [f"discriminant = {round(D, 3)}", "Nature = Real but equal"])
     if D < 0: 
-        output = {"solved": True, "roots": roots, "discriminant": {"value": D, "nature": "Imaginary"}}
-        return output
+        return ReturnDict(solved = True, answer_string = [f"discriminant = {round(D, 3)}", "Nature = Imaginary"])
 
-def DisguisedQuadratic(equation_str):
+
+def DisguisedQuadratic(equation_str): #answerstring[0] = root1, answerstring[1] = root2...
   try:
     equation = sp.sympify(equation_str)
     solutions = sp.solve(equation, x)
 
-    roots = []
+    answers = []
     for solution in solutions:
-        roots.append({"type": "real", "value": float(solution.evalf(3)), "exact_value": solution}) #evalf is a part of sp that converts fraction into decimal as the specified 3 digit number
-    output = {"solved": True, "roots": roots}
-    return output
+        answers.append(f"x = {float(solution.evalf(3))} OR x = {solution}")
+    return ReturnDict(solved = True, answer_string = answers)
   except:
-    output = {"solved": False, "error": "Equation can't be solved."}
+    return ReturnDict(solved = False, error = "Equation can't be solved")
