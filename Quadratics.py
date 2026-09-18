@@ -58,7 +58,7 @@ def MiddleTerm(a, b, c): #answerstring[0] = factored form, answerstring[1] = roo
         answer = []
         answer.append(factored)
         for solution in solutions:
-            answer.append(f"x = {solution}") 
+            answer.append(f"x = {solution.evalf(3)}") 
         return ReturnDict(solved = True, answer_string = answer)
 
 def CompletingSquare(a, b, c): #answerstring[0] = factored form, answerstring[1] = a, answerstring[2] = h, answerstring[2] = k

@@ -3,6 +3,6 @@ This file is to be ammended after either programmer finishes one of their design
 Anael: 
 16/09/2026: I have completed the quadratics topic file. There is room for a bit of improvement so maybe I will do it tomorrow.
 17/09/2026: Improved quadratics function with a better return dictionary
-
+18/09/2026: I wrote a decent percent of the ui in main.py using tkinter but I am realizing the limitations in it. Due to this I am deleting my 3 hrs of work and switching to flask and html setup. To make in flask, I am adding a project I made "WikiGame" to the files so that I can follow along what I did there. 
 
 Rapheal:
