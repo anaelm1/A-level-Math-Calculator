@@ -6,3 +6,4 @@ Anael:
 18/09/2026: I wrote a decent percent of the ui in main.py using tkinter but I am realizing the limitations in it. Due to this I am deleting my 3 hrs of work and switching to flask and html setup. To make in flask, I am adding a project I made "WikiGame" to the files so that I can follow along what I did there. 
 
 Rapheal:
+16/09/2026: I have started the binomial topic file. Need for a few more functions which i will do tomorrow
