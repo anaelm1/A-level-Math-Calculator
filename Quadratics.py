@@ -23,7 +23,7 @@ from sympy import pi, E, I, S, Number #for rounding
 
 x = sp.Symbol('x')
 
-def ReturnDict(solved = True, error = None, answer_string = None):
+def ReturnDict(solved = False, error = None, answer_string = None):
     return {'solved': solved, 'error': error, 'answer_string': answer_string}
 
 def Quadratics(method, equation_str): #TODO: I need to make the input more user friendly as the current formating is ** for powers

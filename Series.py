@@ -21,6 +21,7 @@ Frequently used functions
 
 import sympy as sp
 import math
+from helperFunctions import *
 
 x = sp.symbols('x')
 def Series(methord, quesExpression, quesPower, optRange=None):
@@ -51,11 +52,15 @@ returns a string value of the effecint
 NOTE: Does not return the variable part
 '''
 def coeffecientX(expression, power): 
-    power = int(power)
-    expression = sp.sympify(expression)
-    expansion = sp.poly(sp.expand(expression), x)
-    coeffecient = expansion.coeff_monomial(x**power)
-    return(str(coeffecient))
+    try:
+        power = int(power)
+        expression = sp.sympify(expression)
+        expansion = sp.poly(sp.expand(expression), x)
+        coeffecient = expansion.coeff_monomial(x**power)
+        return (ReturnDict(solved=True, answer_string=str(coeffecient)))
+    except:
+        return ReturnDict(error="Equation is wrong")
+        
 
 '''
 FINDS THE EXPANSTION OF AN EXPRESSION
@@ -72,16 +77,20 @@ returns a string statement of the whole expression
 NOTE: Treats i=0 or X**0 as an exception to not print x**0
 '''
 def completeExpansion(expression, maxPower):
-    maxPower = int(maxPower)
-    expression = sp.sympify(expression)
-    expansion = sp.poly(sp.expand(expression))
-    result=""
-    for i in range(maxPower +1):
-        if i == 0:
-            result += str(expansion.coeff_monomial(x**i))
-        else:
-            result = result + " + " + (str(expansion.coeff_monomial(x**i))+ "*"+ str(x**i))
-    return(result)
+    try:
+        maxPower = int(maxPower)
+        expression = sp.sympify(expression)
+        expansion = sp.poly(sp.expand(expression))
+        result=""
+        for i in range(maxPower +1):
+            if i == 0:
+                result += str(expansion.coeff_monomial(x**i))
+            else:
+                result = result + " + " + (str(expansion.coeff_monomial(x**i))+ "*"+ str(x**i))
+        return (ReturnDict(solved=True, answer_string=result))
+    except:
+        return ReturnDict(error="Equation is wrong")
+        
 
 
 '''
@@ -109,21 +118,29 @@ NOTE: Will give error if more then 1 unkown
 
 
 def unkownExpansion(expression, xTerm, rangeQues=None):
-    unknownVariableFind(expression)
-    termCoeff, termPower = sp.sympify(xTerm).as_coeff_exponent(x)
-    expr, maxPower = sp.sympify(expression).as_base_exp()
-    terms = sp.Add.make_args(expr)
-    term1, var1 = terms[0].as_coeff_exponent(x)
-    term2, var2 = terms[1].as_coeff_exponent(x)
-    r = sp.symbols('r')
-    y = var1*(maxPower-r) + var2*(r) - termPower
-    y = (sp.solve(y,r))
-    y = y[0]
-    fac = sp.binomial(maxPower, y)
-    aFind = sp.Eq(fac * term1**(maxPower-y) * term2**(y), termCoeff)
-    aFind = sp.solve(aFind, a)
-    answer = rangeCheck(aFind, rangeQues)
-    return(answer)
+    try:
+        varName = unknownVariableFind(expression)
+        if varName != 0:
+            
+            termCoeff, termPower = sp.sympify(xTerm).as_coeff_exponent(x)
+            expr, maxPower = sp.sympify(expression).as_base_exp()
+            terms = sp.Add.make_args(expr)
+            term1, var1 = terms[0].as_coeff_exponent(x)
+            term2, var2 = terms[1].as_coeff_exponent(x)
+            r = sp.symbols('r')
+            y = var1*(maxPower-r) + var2*(r) - termPower
+            y = (sp.solve(y,r))
+            y = y[0]
+            fac = sp.binomial(maxPower, y)
+            aFind = sp.Eq(fac * term1**(maxPower-y) * term2**(y), termCoeff)
+            aFind = sp.solve(aFind, varName)
+            answer = rangeCheck(aFind, rangeQues)
+            return (ReturnDict(solved=True, answer_string=answer))
+        else:
+            return ReturnDict(error="Equation has no unknown")
+    except:
+        return ReturnDict(error="Equation is wrong")
+        
 
 # expression1 = "(2*x**0.5 + p*x**2)**6"
 # print(unkownExpansion(expression1, "4860*x**9", "a<0"))
@@ -151,33 +168,37 @@ return a STRING with the right answers
 '''
 
 def unknownExpansion2Brackets(expression, xTerm, rangeQues=None):
-    expressions = expression.split(" * ")
-    if unknownVariableFind(expressions[0]):
-        unknownVariableFind(expressions[0])
-    else:
-        unknownVariableFind(expressions[1])
-    exp1 = sp.expand(sp.sympify(expressions[0]))
-    exp2 = sp.expand(sp.sympify(expressions[1]))
-    terms1 = sp.Add.make_args(exp1)
-    terms2 = sp.Add.make_args(exp2)
-    termCoeff, termPower = sp.sympify(xTerm).as_coeff_exponent(x)
-    newEqn = ""
-    for i in terms1:
-        for j in terms2:
-            power1 = sp.sympify(i).as_coeff_exponent(x)[1]
-            power2 = sp.sympify(j).as_coeff_exponent(x)[1]
-            if power1 + power2 == termPower:
-                newTerm = str(i*j)
-                termIndex = newTerm.find("*x**"+str(termPower))
-                newTerm = newTerm[0:termIndex]
-                if newTerm[0] != "-":
-                    newTerm = "+"+ newTerm
-                newEqn += newTerm
-    newEqn = sp.Eq(sp.sympify(newEqn), termCoeff)
-    aFind = sp.solve(newEqn, a)
-    answer = rangeCheck(aFind, rangeQues)
-    return(answer)
-
+    try:
+        varName = unknownVariableFind(expression)
+        expressions = expression.split(" * ")
+        if unknownVariableFind(expressions[0]):
+            unknownVariableFind(expressions[0])
+        else:
+            unknownVariableFind(expressions[1])
+        exp1 = sp.expand(sp.sympify(expressions[0]))
+        exp2 = sp.expand(sp.sympify(expressions[1]))
+        terms1 = sp.Add.make_args(exp1)
+        terms2 = sp.Add.make_args(exp2)
+        termCoeff, termPower = sp.sympify(xTerm).as_coeff_exponent(x)
+        newEqn = ""
+        for i in terms1:
+            for j in terms2:
+                power1 = sp.sympify(i).as_coeff_exponent(x)[1]
+                power2 = sp.sympify(j).as_coeff_exponent(x)[1]
+                if power1 + power2 == termPower:
+                    newTerm = str(i*j)
+                    termIndex = newTerm.find("*x**"+str(termPower))
+                    newTerm = newTerm[0:termIndex]
+                    if newTerm[0] != "-":
+                        newTerm = "+"+ newTerm
+                    newEqn += newTerm
+        newEqn = sp.Eq(sp.sympify(newEqn), termCoeff)
+        aFind = sp.solve(newEqn, varName)
+        answer = rangeCheck(aFind, rangeQues)
+        return (ReturnDict(solved=True, answer_string=answer))
+    except:
+        return ReturnDict(error="Equation is wrong")
+        
 
 
 
@@ -186,16 +207,7 @@ def unknownExpansion2Brackets(expression, xTerm, rangeQues=None):
 
 #-----------------HELPER FUNCTIONS-----------------
 
-#parses through the expression looking for unkown variable
-#if an unknown variable is found then declares it and returns 1
-#if an unknown variable is not found then return 0
-def unknownVariableFind(expression):
-    for i in range(len(expression)):
-            if expression[i].isalpha() and expression[i] != 'x':
-                global a
-                a = sp.symbols(expression[i])
-                return 1
-    return 0
+
 
 
 
@@ -204,7 +216,7 @@ def unknownVariableFind(expression):
 # then it goes through the list of answers and checks if they are real values, only if they are it checks the condition
 # incase of no condition the functiom returns all answers
 def rangeCheck(answerSet, givenRange="None"):
-    answer=""
+    answer=[]
     if givenRange:
         operators = ["<", ">", ">=", "<="]
         found = False
@@ -217,17 +229,16 @@ def rangeCheck(answerSet, givenRange="None"):
         if j.is_real:
             if givenRange:
                 if eval(condition):
-                        answer = str(round(float(j),2))
+                        answer.append(str(roundingPlaces(j)))
             else:
-                answer += str(round(float(j),2)) + "    "
-    answer = answer.rstrip()
+                answer.append(str(roundingPlaces(j)))
     return answer
 
 
 
 exp = "(1+2*x)**5 * (1-a*x)**6"
 
-#print(unknownExpansion2Brackets(exp, "-5*x**2", "a<2"))
-# expression = "(1 + 3*x)**6"
-print(Series(4, exp,"-5*x**2", "a>2"))
+print(unknownExpansion2Brackets(exp, "-5*x**2", "a<2"))
+expression = "(1 + a*x)**6"
+#print(Series(3, expression, 135*x**2))
 

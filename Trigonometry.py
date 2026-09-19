@@ -21,7 +21,7 @@ import sympy as sp #for solving
 
 x = sp.Symbol('x')
 
-def ReturnDict(solved = True, error = None, answer_string = None):
+def ReturnDict(solved = False, error = None, answer_string = None):
     return {'solved': solved, 'error': error, 'answer_string': answer_string}
 
 def Trigonometry(method, mode, equation_str, range_lower, range_upper):
