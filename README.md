@@ -1,18 +1,18 @@
-##Calculator
+## Calculator
 An A Level Scientific Calculator made by Anael and Rapheal.
 
-##Overview
-#Topics included:
--Quadratics
--Functions
--Coordinate geometry
--Circular measure
--Trigonometry
--Series
--Differentiation
--Integration
+## Overview
+# Topics included (In depth breakdown can be found in each topics files):
+- Quadratics
+- Functions
+- Coordinate geometry
+- Circular measure
+- Trigonometry
+- Series
+- Differentiation
+- Integration
 
-##Note
+## Note
 This project is underdevelopment.The details about the project can be checked out at Project_Guidelines.txt, and our progress can be checked out at progress.txt. 
 
 It is being developed as part of Third Space event in Hack Club.
