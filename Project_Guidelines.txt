@@ -20,7 +20,7 @@ Each topic will have its separate file in the format "topicname.py":
 
 Before shipping each week, both programmers will review and throughly test each others functions to make sure the program works perfectly. 
 
-After all topics' functions are written, the main.py file will be implemented. This file will contain the connection between all the functions.
+After all topics' functions are written, the app.py file will be implemented. This file will contain the connection between all the functions.
 
 It is not required for all functions to be implemented together instead they can be implemented one at a time depending on their requirments. 
 

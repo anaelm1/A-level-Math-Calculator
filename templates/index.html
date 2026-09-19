@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        /* 1. Define the grid container */
+        .button-grid {
+            display: grid;
+            /* Creates 3 columns of equal width */
+            grid-template-columns: repeat(3, 1fr); 
+            /* Adds a 10px spacing gap between the grid rows and columns */
+            gap: 10px; 
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        /* 2. Optional: Style the buttons to look nice */
+        .grid-btn {
+            padding: 15px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        /* Hover state for buttons */
+        .grid-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form action="/" method="POST">
+        <input type="submit" name="solve" value = "True">
+    </form>
+
+    <form action="/" method="POST">
+        <input type="text" id="userExpression" name="userExpression" value="{{ user_expression or '' }}">
+        <div class="button-grid">
+                <!-- Every button has the same name, but a unique value -->
+                <input type="submit" name="x" value = x class="key-btn" data-val = "x">            
+                <input type="submit" name="y" value = y class="key-btn" data-val = "y">            
+                <input type="submit" name="+" value = + class="key-btn" data-val = "+">            
+                <input type="submit" name="x" value = x class="key-btn" data-val = "x">            
+                <input type="submit" name="x" value = x class="key-btn" data-val = "x">            
+                <input type="submit" name="x" value = x class="key-btn" data-val = "x">            
+        </div>
+    </form>
+</body>
+</html>
+
+<script>
+    const inputField = document.getElementById('userExpression');
+    const Buttons = document.querySelectorAll('.key-btn');
+
+    Buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const valueToAppend = button.getAttribute('data-val');
+            inputField.value += valueToAppend;
+            inputField.focus();
+        });
+    });
+</script>
