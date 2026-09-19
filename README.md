@@ -13,6 +13,6 @@ An A Level Scientific Calculator made by Anael and Rapheal.
 - Integration
 
 ## Note
-This project is underdevelopment.The details about the project can be checked out at Project_Guidelines.txt, and our progress can be checked out at progress.txt. 
+This project is underdevelopment. The details about the project can be checked out at Project_Guidelines.txt, and our progress can be checked out at progress.txt. 
 
 It is being developed as part of Third Space event in Hack Club.
