@@ -1,8 +1,8 @@
 ## Calculator
 An A Level Scientific Calculator made by Anael and Rapheal.
 
-##Overview
-#Topics included:
+## Overview
+# Topics included:
 -Quadratics
 -Trigonometry
 -Series
