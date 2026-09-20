@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator Solver</title>
+    <style>
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .key-btn {
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="calcForm" action="/solver" method="POST">
+        <input type="text" id="userExpression" name="userExpression" value="{{ user_expression or '' }}" autocomplete="off">
+        <button type="submit" name="solve" value="True">Solve</button>
+
+        <div class="button-grid">
+            {% for btn in buttonsData %}    
+                <button type="button" id="{{ btn['id'] }}" name="{{ btn['id'] }}" class="key-btn {{ btn['css_class'] }}" data-val="{{ btn['value'] }}">{{ btn['label'] | safe }}</button>      
+            {% endfor %}
+        </div>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputField = document.getElementById('userExpression');
+            const buttons = document.querySelectorAll('.key-btn');
+
+            const inputHistory = [];
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const value = button.getAttribute('data-val');
+
+                    if (value === 'DEL') {
+                        if (inputHistory.length > 0) {
+                            const lastLen = inputHistory.pop();
+                            inputField.value = inputField.value.slice(0, -lastLen);
+                        }
+                    } 
+                    else {
+                        inputField.value += value;
+                        inputHistory.push(value.length);
+                    }
+
+                    inputField.focus();
+                });
+            });
+
+            inputField.addEventListener('input', () => {
+                inputHistory.length = 0;
+            });
+        });
+    </script>
+</body>
+</html>
