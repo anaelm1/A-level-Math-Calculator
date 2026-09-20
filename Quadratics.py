@@ -20,109 +20,132 @@ The return dictionary contains:
 import math
 import sympy as sp #for factoring
 from sympy import pi, E, I, S, Number #for rounding
+from helperFunctions import *
 
 x = sp.Symbol('x')
 
-def ReturnDict(solved = False, error = None, answer_string = None):
-    return {'solved': solved, 'error': error, 'answer_string': answer_string}
 
-def Quadratics(method, equation_str): #TODO: I need to make the input more user friendly as the current formating is ** for powers
-    poly = sp.Poly(equation_str, x)
-    a = float(poly.coeff_monomial(x**2))
-    b = float(poly.coeff_monomial(x**1))
-    c = float(poly.coeff_monomial(x**0))
-    
-    if method != 5 and a == 0: 
-        return ReturnDict(solved = False, error = "A cannot be 0 as that is a linear equation.")
+def Quadratics(method=None, equation_str=None): #TODO: I need to make the input more user friendly as the current formating is ** for powers
+    try:
+        equation_str = sp.sympify(equation_str)
+        poly = sp.Poly(equation_str, x)
+        a = float(poly.coeff_monomial(x**2))
+        b = float(poly.coeff_monomial(x**1))
+        c = float(poly.coeff_monomial(x**0))
+        match method:
+            case 1:
+                return MiddleTerm(a, b, c)
+            case 2:
+                return CompletingSquare(a, b, c)
+            case 3:
+                return QuadraticFormula(a, b, c)
+            case 4:
+                return Discriminant(a, b, c)
+            case 5:
+                return DisguisedQuadratic(equation_str)
+            case _:
+                return (ReturnDict(False))
+    except:
+        return (ReturnDict(False))
 
-    
-    if method == 1:
-        return MiddleTerm(a, b, c)
-    elif method == 2:
-        return CompletingSquare(a, b, c)
-    elif method == 3:
-        return QuadraticFormula(a, b, c)
-    elif method == 4:
-        return Discriminant(a, b, c)
-    elif method == 5: 
-        return DisguisedQuadratic(equation_str) 
+
 
 def MiddleTerm(a, b, c): #answerstring[0] = factored form, answerstring[1] = root1, answerstring[2] = root 2...
-    expression = a*x**2 + b*x + c
-    factored = sp.factor(expression)
+    try:
+        expression = a*x**2 + b*x + c
+        factored = sp.factor(expression)
 
-    if factored == expression: #sp returns same eqn if no factoring possible
-        return ReturnDict(solved = False, error = "No factoring possible. Quadratic formula option is available.")
-    else:
-        solutions = sp.solveset(expression, x)
-        answer = []
-        answer.append(factored)
-        for solution in solutions:
-            answer.append(f"x = {solution.evalf(3)}") 
-        return ReturnDict(solved = True, answer_string = answer)
+        if factored == expression: #sp returns same eqn if no factoring possible
+            return ReturnDict(solved = False)
+        else:
+            solutions = sp.solveset(expression, x)
+            answer = []
+            answer.append(factored)
+            for solution in solutions:
+                answer.append(f"x = {roundingPlaces(solution)}") 
+            return ReturnDict(solved = True, answer_string = answer)
+    except:
+        return (ReturnDict(False))
 
 def CompletingSquare(a, b, c): #answerstring[0] = factored form, answerstring[1] = a, answerstring[2] = h, answerstring[2] = k
-    h = -b / (2 * a)
-    h = round(h, 3)
+    try:
+        h = -b / (2 * a)
+        h = roundingPlaces(h)
 
-    k = c - (b**2 / (4 * a))
-    k = round(k, 3)
+        k = c - (b**2 / (4 * a))
+        k = roundingPlaces(k)
 
-    if h >= 0:
-        h_str = f"- {abs(h)}"
-    elif h < 0:
-        h_str = f"+ {abs(h)}"
-    else:
-        h_str = ""
-    
-    if k > 0:
-        k_str = f" + {abs(k)}"
-    elif k < 0:
-        k_str = f" - {abs(k)}"
-    else:
-        k_str = ""
-
-    if a == 1:
-        target_a = a
-    elif a == -1:
-        target_a = "-"
-    else: 
-        target_a = str(round(a,3))
-
-    form = f"{target_a}(x {h_str})^2{k_str}"
-
-    return ReturnDict(solved = True, answer_string = [form, a, h, k])
-
-def QuadraticFormula(a, b, c): #answerstring[0] = root1, answerstring[1] = root2...
-    expression = a*x**2 + b*x + c
-    solutions = sp.solveset(expression, x)
-    answers = []
-    for solution in solutions:
-        if (b ** 2) - (4 * a * c) < 0:
-            answers.append(f"x = {solution}")
+        if h >= 0:
+            h_str = f"- {abs(h)}"
+        elif h < 0:
+            h_str = f"+ {abs(h)}"
         else:
-            answers.append(f"x = {float(solution.evalf(3))} OR x = {solution}")
-    return ReturnDict(solved = True, answer_string = answers)
+            h_str = ""
+        
+        if k > 0:
+            k_str = f" + {abs(k)}"
+        elif k < 0:
+            k_str = f" - {abs(k)}"
+        else:
+            k_str = ""
+
+        if a == 1:
+            target_a = a
+        elif a == -1:
+            target_a = "-"
+        else: 
+            target_a = str(roundingPlaces(a))
+
+        form = f"{target_a}(x {h_str})**2{k_str}"
+
+        return ReturnDict(solved = True, answer_string = [form, a, h, k])
+    except:
+        return (ReturnDict(False))
+
+
+    
+def QuadraticFormula(a, b, c): #answerstring[0] = root1, answerstring[1] = root2...
+    try:
+        expression = a*x**2 + b*x + c
+        solutions = sp.solveset(expression, x)
+        answers = []
+        for solution in solutions:
+            if (b ** 2) - (4 * a * c) < 0:
+                answers.append(f"x = {solution}")
+            else:
+                answers.append(f"x = {roundingPlaces(solution)}")
+        return ReturnDict(solved = True, answer_string = answers)
+    except:
+        return (ReturnDict(False))
 
 
 def Discriminant(a, b, c): #answerstring[0] = discriminant value, answerstring[1] = nature...
-    D = (b ** 2) - (4 * a * c)
-    if D > 0: 
-        return ReturnDict(solved = True, answer_string = [f"discriminant = {round(D, 3)}", "Nature = Real"])
-    if D == 0: 
-        return ReturnDict(solved = True, answer_string = [f"discriminant = {round(D, 3)}", "Nature = Real but equal"])
-    if D < 0: 
-        return ReturnDict(solved = True, answer_string = [f"discriminant = {round(D, 3)}", "Nature = Imaginary"])
+    try:
+        D = (b ** 2) - (4 * a * c)
+        if D > 0: 
+            return ReturnDict(solved = True, answer_string = [f"discriminant = {roundingPlaces(D)}", "Nature = Real"])
+        if D == 0: 
+            return ReturnDict(solved = True, answer_string = [f"discriminant = {roundingPlaces(D)}", "Nature = Real but equal"])
+        if D < 0: 
+            return ReturnDict(solved = True, answer_string = [f"discriminant = {roundingPlaces(D)}", "Nature = Imaginary"])
+    except:
+        return (ReturnDict(False))
+
 
 
 def DisguisedQuadratic(equation_str): #answerstring[0] = root1, answerstring[1] = root2...
   try:
     equation = sp.sympify(equation_str)
     solutions = sp.solve(equation, x)
-
     answers = []
     for solution in solutions:
-        answers.append(f"x = {float(solution.evalf(3))} OR x = {solution}")
+        answers.append(f"x = {roundingPlaces(solution)}")
     return ReturnDict(solved = True, answer_string = answers)
   except:
-    return ReturnDict(solved = False, error = "Equation can't be solved")
+    return (ReturnDict(False))
+
+
+
+#Checked Functions
+
+print(Quadratics(1, "3*x**2 + 5*x - 1"))

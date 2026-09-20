@@ -18,51 +18,53 @@ Pi is written like this sp.pi
 
 import math
 import sympy as sp #for solving
-
+from helperFunctions import *
 x = sp.Symbol('x')
 
-def ReturnDict(solved = False, error = None, answer_string = None):
-    return {'solved': solved, 'error': error, 'answer_string': answer_string}
 
-def Trigonometry(method, mode, equation_str, range_lower, range_upper):
-    if method == 2:
-        return Equations(mode, equation_str, range_lower, range_upper)
+def Trigonometry(method=None, mode=None, equation_str=None, range_lower=None, range_upper=None):
+    if method and mode and equation_str:
+        try:
+            match method:
+                case 1:
+                    return Equations(mode, equation_str, range_lower, range_upper)
+                case _:
+                    return (ReturnDict(False))
+        except:
+            return (ReturnDict(False))
+    else:
+        return (ReturnDict(False))
 
 
 def Equations(mode, equation_str, range_lower, range_uppper): #everything in Rad
-    if mode == 'deg':
-        range_uppper = math.radians(range_uppper)
-        range_lower = math.radians(range_lower)
-    parts = equation_str.split("=", 1)
-    LHS = parts[0]
-    RHS = parts[1]
-
-    LHS = sp.sympify(LHS)
-    RHS = sp.sympify(RHS)
-
-    equation = sp.Eq(LHS, RHS)
-
-    solutions = sp.solveset(equation, x, domain= sp.Interval(range_lower, range_uppper))
-    answers = []
-    for solution in solutions:
+    #try:
         if mode == 'deg':
-            solution = math.degrees(solution)
-            answers.append(f"x = {solution:.1f} OR x = {solution:.3f}")
-        else:
-            answers.append(f"x = {solution} OR x = {float(solution.evalf()):.3f}")
+            range_uppper = math.radians(range_uppper)
+            range_lower = math.radians(range_lower)
+        parts = equation_str.split("=", 1)
+        LHS = parts[0]
+        RHS = parts[1]
+        if LHS: 
+            LHS = sp.sympify(LHS)
+        if RHS:
+            RHS = sp.sympify(RHS)
 
-    if answers == []:
-        return ReturnDict(solved = False, error = 'Equation has imaginary solutions')
-    
-    return ReturnDict(solved = True, error = None, answer_string = answers)
+        equation = sp.Eq(LHS, RHS)
 
-def Identities(equation_str): #equation will be separated by the two equals to (==) 
-    parts = equation_str.split("=", 1)
-    LHS = parts[0]
-    RHS = parts[1]
+        solutions = sp.solveset(equation, x, domain= sp.Interval(range_lower, range_uppper))
+        answers = []
+        for solution in solutions:
+            if mode == 'deg':
+                solution = math.degrees(solution)
+                answers.append(f"x = {solution:.1f} OR x = {solution:.3f}")
+            else:
+                answers.append(f"x = {solution} OR x = {float(solution.evalf()):.3f}")
 
-    equal_check = LHS.equals(RHS)
-    if not equal_check:
-       return ReturnDict(solved = False, error = 'LHS AND RHS are not equal') 
-    #This requires AI concepts Breath first search algorithm 
+        if answers == []:
+            return (ReturnDict(False))
+        
+        return ReturnDict(solved = True, error = None, answer_string = answers)
+    # except:
+    #     return (ReturnDict(False))
 
+print(Trigonometry(1, "deg", "2 * ps.sin(x) - 1 = 0", 0, 360))

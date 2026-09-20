@@ -15,8 +15,8 @@ def roundingPlaces(number):
     return number
 
 
-def ReturnDict(solved = False, error = None, answer_string = None):
-    return {'solved': solved, 'error': error, 'answer_string': answer_string}
+def ReturnDict(solved = False, answer_string = None):
+    return {'solved': solved, 'answer_string': answer_string}
 
 
 #parses through the expression looking for unkown variable

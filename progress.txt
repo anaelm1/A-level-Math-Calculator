@@ -7,4 +7,7 @@ Anael:
 19/09/2026: I started the implemention of the app.py and the html files as well. I have basic structure on how the app wil flow.
 
 Rapheal:
-16/09/2026: I have started the binomial topic file. Need for a few more functions which i will do tomorrow
+17/09/2026: I have started the binomial topic file. Need for a few more functions which i will do tomorrow
+18/09/2026: I have started work on differentiation. still room for improvement
+19/09/2026: I have continued with differentiation and made serveral new functions
+20/09/2026: I have started work on integration, improved quadratics and differentiation for final use

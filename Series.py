@@ -1,15 +1,14 @@
 '''
+CODED BY RAPHEAL
+
+
 Series is one of the early topics and comprisies of the following
     1. Binomial Expansion
         1. Expansion
         2. Coffecent of X term
         3. Expansion Multiplied by another bracket
         4. 1 Unknown variable 
-        5. 2 unknown variable - NOT DONE YET
-        6. 1 unknown variable with 2 brackets
-    2. Arthematic Progression
-    3. Geometric Progression
-
+        5. 1 unknown variable with 2 brackets
 
 
 
@@ -22,18 +21,35 @@ Frequently used functions
 import sympy as sp
 import math
 from helperFunctions import *
-
 x = sp.symbols('x')
-def Series(methord, quesExpression, quesPower, optRange=None):
-    match methord:
-        case 1:
-            return coeffecientX(quesExpression, quesPower)
-        case 2:
-            return completeExpansion(quesExpression, quesPower)
-        case 3:
-            return unkownExpansion(quesExpression, quesPower, optRange)
-        case 4:
-            return unknownExpansion2Brackets(quesExpression, quesPower, optRange)
+
+
+
+
+'''
+main function for series
+all of its parameters have a default value of None to avoid any crash
+it is incased in try and if to ensure there are no crashed at any given point
+'''
+
+def Series(methord=None, quesExpression=None, quesPower=None, optRange=None):
+    if methord and quesExpression:
+        try:
+            match methord:
+                case 1:
+                    return coeffecientX(quesExpression, quesPower)
+                case 2:
+                    return completeExpansion(quesExpression, quesPower)
+                case 3:
+                    return unkownExpansion(quesExpression, quesPower, optRange)
+                case 4:
+                    return unknownExpansion2Brackets(quesExpression, quesPower, optRange)
+                case _:
+                    return (ReturnDict(False))
+        except:
+            return (ReturnDict(False))
+    else:
+        return (ReturnDict(False))
 
 
 
@@ -59,7 +75,7 @@ def coeffecientX(expression, power):
         coeffecient = expansion.coeff_monomial(x**power)
         return (ReturnDict(solved=True, answer_string=str(coeffecient)))
     except:
-        return ReturnDict(error="Equation is wrong")
+        return (ReturnDict(False))
         
 
 '''
@@ -89,7 +105,7 @@ def completeExpansion(expression, maxPower):
                 result = result + " + " + (str(expansion.coeff_monomial(x**i))+ "*"+ str(x**i))
         return (ReturnDict(solved=True, answer_string=result))
     except:
-        return ReturnDict(error="Equation is wrong")
+        return (ReturnDict(False))
         
 
 
@@ -137,9 +153,9 @@ def unkownExpansion(expression, xTerm, rangeQues=None):
             answer = rangeCheck(aFind, rangeQues)
             return (ReturnDict(solved=True, answer_string=answer))
         else:
-            return ReturnDict(error="Equation has no unknown")
+            return (ReturnDict(False))
     except:
-        return ReturnDict(error="Equation is wrong")
+        return (ReturnDict(False))
         
 
 # expression1 = "(2*x**0.5 + p*x**2)**6"
@@ -197,7 +213,7 @@ def unknownExpansion2Brackets(expression, xTerm, rangeQues=None):
         answer = rangeCheck(aFind, rangeQues)
         return (ReturnDict(solved=True, answer_string=answer))
     except:
-        return ReturnDict(error="Equation is wrong")
+        return (ReturnDict(False))
         
 
 
