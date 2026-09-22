@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+        <style>
+            body{
+                background-color: #f6f7f9;
+            }
+
+            .mainDiv{
+                justify-self: center;
+               
+                
+            }
+
+            .listOfTopics{
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .topicListButtons{
+                border-color: #dfe1e4;
+                padding: 25px;
+                background-color: #f6f7f9;
+                border-style:solid;
+                border-radius: 25px;
+                min-height: 120px;
+                min-width: 700px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 20px;
+
+            }
+
+            .textHolder{
+                flex: 1;
+                display:flex;
+                flex-direction: column;
+                gap: 10px;
+
+
+                
+            }
+            .buttonTitle{
+                font-family: Inter;
+                font-size: 20px;
+                text-align: start;
+                color: #1d1f23;
+                font-weight: 600;
+                
+
+            }
+            .buttonText{
+                font-family: Inter;
+                font-size: 14px;
+                text-align: start;
+                color: #696d72;
+            }
+
+            .arrowHolder{
+                border: #dfe1e4;
+                border-width: 2px;
+                border-style: solid;
+                border-radius: 100%;
+                object-fit: cover;     
+                transform: rotate(180deg); 
+                padding: 40%;
+                width: 25px;  
+                transition: 0.5s;     
+            }
+
+            .arrowHolder:hover{
+                content: url("IMG/visily-arrow-left-white.png");
+                background-color: #6366f1;
+                border: #6366f1;
+                /* transform: rotate(90deg); */
+            }
+
+            .imgButtonClick{
+                transform: rotate(275deg); 
+            }
+        </style>
+
+    </head>
+    <body>
+        <div class="mainDiv">
+            <div class="listOfTopics"></div>
+
+        </div>
+    </body>
+
+    <script>
+        const topicList = [
+            {topic : "Quadratics",
+            subtext: "Solve quadratic equations, find roots, and analyze quadratic functions.",
+            subtopics: ['Middle Term Breaking', "Completing Square", "Quadratic Formula", "Discriminant", "Disguised Quadratic"]},
+            {topic : "Binomial Theorem", subtext: "Expand binomial expressions and calculate specific terms or coefficients."},
+            {topic : "Trigonometry", subtext: "Calculate trigonometric ratios, angles, and solve trigonometric equations."},
+            {topic : "Differentiation", subtext: "Differentiate functions and calculate gradients, stationary points, and rates of change."},
+            {topic : "Integration", subtext: "Integrate functions and calculate definite integrals and areas under curves."}
+        ];
+        lenTopics = topicList.length
+        
+        newHTML = ""
+
+        for (let i = 0; i < lenTopics; i++){
+            // topicName = 
+            // subText = topicList[i].subtext
+            newHTML += 
+            `
+            <div class=buttonDiv> 
+                <button class=topicListButtons> 
+                    <span class=buttonImage>Test Image</span>
+                    <span class=textHolder>
+                        <span class=buttonTitle>${topicList[i].topic}</span> 
+                        <span class=buttonText>${topicList[i].subtext}</span> 
+                    </span>
+                    <span class=arrowHolder1 id="${topicList[i].id}">
+                        <img src=IMG/visily-arrow-left-grey.png class="arrowHolder">
+                    </span>
+                </button>
+            </div>
+            `
+        };
+
+        document.querySelector(".listOfTopics").innerHTML = newHTML
+
+
+
+
+
+
+
+
+        // const imgButtons = document.querySelectorAll(".arrowHolder")
+        // //const buttonColorImg = `<img src=IMG/visily-arrow-left-white.png class="topicArrow imgButtonHover">`
+        // imgButtons.forEach(imgButton => {
+        //     imgButton.addEventListener('mouseenter', () => {
+        //         imgButton.classList.add("imgButtonHover")
+        //         imgButton.src = "IMG/visily-arrow-left-white.png";
+        // })})
+
+        // //const buttonGreyImg = `<img src=IMG/visily-arrow-left-grey.png class="topicArrow">`
+        // imgButtons.forEach(imgButton => {
+        //     imgButton.addEventListener('mouseleave', () => {
+        //         // imgButton.classList.remove("imgButtonHover")
+        //         imgButton.classList.remove("imgButtonHover")
+        //         imgButton.src = "IMG/visily-arrow-left-grey.png";
+        // })})
+
+
+
+        // querySelectorAll find all the divs with the class buttonDiv and stores in an Array
+        // forEach runs across the whole array and then addEventListener checks if there has been a click 
+        // in case of it, it concatinates into an string varible the subtopics from the topicList array
+        // then it adds it to the end of the buttonDiv 
+
+
+        const topicButtons = document.querySelectorAll(".buttonDiv")
+        topicButtons.forEach(topicButton => {
+            topicButton.addEventListener('click', () => {
+                const subTopicsELement = topicButton.querySelector(".subTopics")
+                if (!subTopicsELement) {
+                    topicButton.classList.add('activeTopic')
+                    subTopicHTML = `
+                    <div class="subTopics">
+                    `
+                    arrayPosition = Array.from(topicButtons).indexOf(topicButton)
+                    subtopiclen = (topicList[0].subtopics).length
+                    for (let i = 0; i < subtopiclen; i++){
+                        subTopicHTML += `
+                        <button class="subTopicButton">${topicList[0].subtopics[i]}
+                        `
+                    }
+                    subTopicHTML+=`
+                    </div>
+                    `
+                    document.querySelector(".activeTopic").innerHTML += subTopicHTML
+                } else {
+                    subTopicsELement.remove()
+                    topicButton.classList.remove('activeTopic')
+                }
+                
+            })
+        })
+
+
+
+
+
+
+    </script>
+
+
+</html>
