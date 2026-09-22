@@ -1,14 +1,11 @@
 '''
 CODED BY RAPHEAL
-
-
-Series is one of the early topics and comprisies of the following
-    1. Binomial Expansion
-        1. Expansion
-        2. Coffecent of X term
-        3. Expansion Multiplied by another bracket
-        4. 1 Unknown variable 
-        5. 1 unknown variable with 2 brackets
+Binomial Expansion:
+    1. Expansion
+    2. Coffecent of X term
+    3. Expansion Multiplied by another bracket
+    4. 1 Unknown variable 
+    5. 1 unknown variable with 2 brackets
 
 
 
@@ -27,15 +24,15 @@ x = sp.symbols('x')
 
 
 '''
-main function for series
+main function for binomial
 all of its parameters have a default value of None to avoid any crash
 it is incased in try and if to ensure there are no crashed at any given point
 '''
 
-def Series(methord=None, quesExpression=None, quesPower=None, optRange=None):
-    if methord and quesExpression:
+def Binomial(method=None, quesExpression=None, quesPower=None, optRange=None):
+    if method and quesExpression:
         try:
-            match methord:
+            match method:
                 case 1:
                     return coeffecientX(quesExpression, quesPower)
                 case 2:

@@ -11,10 +11,11 @@ from flask import Flask, flash, redirect, render_template, request, jsonify, ses
 
 from Quadratics import Quadratics 
 from Trigonometry import Trigonometry
-from Series import Series
-from Integration import basicIntegration
+from Binomial import Binomial
+from Integration import integration
 from Differentiation import differentiation
-from helperFunctions import inputCleaner
+from Arithmetic import Arithmetic
+from helperFunctions import *
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'local-development-fallback-key')
@@ -82,6 +83,8 @@ def solver():
         {"id": "btn_7", "label": "7", "value": "7", "css_class": "btn-num"},
         {"id": "btn_8", "label": "8", "value": "8", "css_class": "btn-num"},
         {"id": "btn_9", "label": "9", "value": "9", "css_class": "btn-num"},
+        {"id": "btn_infinity", "label": "oo", "value": "oo", "css_class": "btn-num"}, #double 0 is infinity is sympy
+
 
         # Row 8: Keypad (4-6) 
         {"id": "btn_4", "label": "4", "value": "4", "css_class": "btn-num"},

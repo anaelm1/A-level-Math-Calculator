@@ -6,6 +6,7 @@ Anael:
 18/09/2026: I wrote a decent percent of the ui in main.py using tkinter but I am realizing the limitations in it. Due to this I am deleting my 3 hrs of work and switching to flask and html setup. To make in flask, I am adding a project I made "WikiGame" to the files so that I can follow along what I did there. 
 19/09/2026: I started the implemention of the app.py and the html files as well. I have basic structure on how the app wil flow.
 20/09/2026: Almost completed the basics of the frontend. Will continue this tomorrow as well. 
+21/09/2026: I wrote more of the ui and then wrote a helper function to make human input into sympy understandable input. 
 
 Rapheal:
 17/09/2026: I have started the binomial topic file. Need for a few more functions which i will do tomorrow

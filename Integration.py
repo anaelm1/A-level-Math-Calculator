@@ -1,9 +1,10 @@
 '''
-CODED BY RAPHEAL
+CODED BY RAPHEAL/ANAEL
 
 
 Integration is another essential topic of P1 and has the following topics
-    1. Basic Integration
+    1. Integration of equation
+    2. Integration of equation (with limits)
 '''
 
 
@@ -13,8 +14,19 @@ from helperFunctions import *
 
 x = sp.symbols('x')
 
+#argument1 is either a list of xy or list of lowerlimit and upperlimit
+def integration(method, expression, argument1):
+    if method and argument1 and expression:
+        try:
+            match method:
+                case 1:
+                    return eqnIntegration(expression, argument1)
+                case 2:
+                    return eqnIntegrationRoots(expression, argument1)
+        except:
+            return (ReturnDict(False))
 
-def basicIntegration(expression, Coordinates):
+def eqnIntegration(expression, Coordinates):
     try:
         c = sp.symbols('c')
         equations = []
@@ -37,7 +49,16 @@ def basicIntegration(expression, Coordinates):
     except:
         return (ReturnDict(False))
 
+def eqnIntegrationRoots(expression, limits):
+    try:
+        expression = sp.sympify(expression)
+        integral = sp.integrate(expression, (x, limits[0], limits[1]))
+        return (ReturnDict(True, integral))
+    except:
+        return (ReturnDict(False))
 
+'''
+(x, 0, 3)
+exp = "x**2"                                      
+print(eqnIntegrationRoots(exp, (0,3)))'''
 
-exp = "6*x**2 - 4*x + 3"
-basicIntegration(exp, (2,11))

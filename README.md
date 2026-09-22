@@ -5,7 +5,7 @@ An A Level Scientific Calculator made by Anael and Rapheal.
 # Topics included:
 - Quadratics
 - Trigonometry
-- Series
+- Series: Binomial, Arithmetic, Geometric 
 - Differentiation
 - Integration
 
