@@ -33,10 +33,10 @@ it is incased in try and if to ensure there are no crashed at any given point
 '''
 
 
-def differentiation(methord=None, expression=None, argument1=None, argument2=None, argument3=None):
-    if methord and expression:
+def differentiation(method=None, expression=None, argument1=None, argument2=None, argument3=None):
+    if method and expression:
         try:
-            match methord:
+            match method:
                 case 1: 
                     return eqnOfLineXcord(expression, argument1, argument2)
                     #eqnOfLineXcord(expression, lineType, xCord)
@@ -353,15 +353,3 @@ def rangeCheck(answerSet, givenRange="None"):
 
 exp = "x**3 - 4*x**2 + 5*x + 1"
 exp2 = "k**2 * x**3 - 5*k*x**2 + 8*x - 3"
-
-
-
-
-
-
-
-
-
-
-
-print(differentiation())

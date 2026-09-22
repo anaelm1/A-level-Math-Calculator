@@ -254,7 +254,7 @@ def rangeCheck(answerSet, givenRange="None"):
 
 exp = "(1+2*x)**5 * (1-a*x)**6"
 
-print(unknownExpansion2Brackets(exp, "-5*x**2", "a<2"))
+#print(unknownExpansion2Brackets(exp, "-5*x**2", "a<2"))
 expression = "(1 + a*x)**6"
 #print(Series(3, expression, 135*x**2))
 

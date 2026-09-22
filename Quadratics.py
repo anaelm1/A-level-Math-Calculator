@@ -147,5 +147,3 @@ def DisguisedQuadratic(equation_str): #answerstring[0] = root1, answerstring[1] 
 
 
 #Checked Functions
-
-print(Quadratics(1, "3*x**2 + 5*x - 1"))

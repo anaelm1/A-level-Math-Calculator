@@ -66,5 +66,3 @@ def Equations(mode, equation_str, range_lower, range_uppper): #everything in Rad
         return ReturnDict(solved = True, error = None, answer_string = answers)
     # except:
     #     return (ReturnDict(False))
-
-print(Trigonometry(1, "deg", "2 * ps.sin(x) - 1 = 0", 0, 360))

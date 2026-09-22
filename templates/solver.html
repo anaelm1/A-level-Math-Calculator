@@ -21,7 +21,7 @@
 <body>
 
     <form id="calcForm" action="/solver" method="POST">
-        <input type="text" id="userExpression" name="userExpression" value="{{ user_expression or '' }}" autocomplete="off">
+        <input type="text" id="userExpression" name="userExpression" value="{{ userExpression or '' }}" autocomplete="off">
         <button type="submit" name="solve" value="True">Solve</button>
 
         <div class="button-grid">
