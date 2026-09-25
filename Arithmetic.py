@@ -16,14 +16,14 @@ formulas we will use:
 from helperFunctions import *
 from sympy import *
 
-def Arithmetic(method=None, a=None, d=None, n=None, terms=None):
+def Arithmetic(method=None, a=None, d=None, n=None, term1=None, term2=None):
     if method:
         try:
             match method:
                 case 1: return nthTerm(n, d, a)
-                case 2: return daFromtwoTerms(terms)
+                case 2: return daFromtwoTerms(term1, term2)
                 case 3: return sumFromda(n, d, a)
-                case 4: return sumFromtwoTerms(n, terms)
+                case 4: return sumFromtwoTerms(n, term1, term2)
                 case 5: return eqnFromda(d, a)
         except:
             return (ReturnDict(False))
@@ -38,25 +38,13 @@ def nthTerm(n, d, a):
     except:
         return (ReturnDict(False))
 
-#term1/term2 are both dicts [{'n': value}, {'n': value}]
-def daFromtwoTerms(terms): 
+#term1/term2 are both lists with n on 0 index and its value on 1 index
+def daFromtwoTerms(term1, term2): 
     try:
         a, d = symbols('a d')
 
-        #Getting n and nth value from my dict in a list data type
-        n1 = terms[0].keys() 
-        n1 = list(n1)
-        n1 = n1[0]
-        nth1 = terms[0][n1]
-        n1 = int(n1)
-        n2 = terms[1].keys() 
-        n2 = list(n2)
-        n2 = n2[0]
-        nth2 = terms[1][n2]
-        n2 = int(n2)
-
-        eqn1 = Eq(a + (n1-1)*d, nth1)
-        eqn2 = Eq(a + (n2-1)*d, nth2)
+        eqn1 = Eq(a + (term1[0]-1)*d, term1[1])
+        eqn2 = Eq(a + (term2[0]-1)*d, term2[0])
 
         answer = []
         solution = solve((eqn1, eqn2), (a, d))
@@ -70,7 +58,7 @@ def daFromtwoTerms(terms):
 def sumFromda(n, d, a):
     try:
         sum = (n/2) * (2*a + (n-1)*d)
-        answer = f'Sum of {n}th terms is {roundingPlaces(sum)}'
+        answer = f'Sum to {n}th term is {roundingPlaces(sum)}'
         return (ReturnDict(True, answer_string = answer))
     except:
         return (ReturnDict(False))
@@ -98,7 +86,7 @@ def sumFromtwoTerms(n, terms):
         solution = solve((eqn1, eqn2), (a, d))
         sum = (n/2) * (2*a + (n-1)*d)
 
-        answer = f'Sum of {n}th terms is {roundingPlaces(sum)}'
+        answer = f'Sum to {n}th term is {roundingPlaces(sum)}'
         return (ReturnDict(True, answer_string = answer))
 
     except:
@@ -113,7 +101,7 @@ def eqnFromda(d, a):
 
 
 '''
-# Test Case
+Test 
 terms = [{3: 10}, {7: 22}]
 print(daFromtwoTerms(terms))
 

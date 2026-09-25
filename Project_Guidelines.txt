@@ -18,7 +18,7 @@ After all topics' functions are written, the app.py file will be implemented. Th
 
 It is not required for all functions to be implemented together instead they can be implemented one at a time depending on their requirments. 
 
-To maintain program integrety, both programmers will git pull and push after they complete one topic. 
+To maintain sync, both programmers will git pull and push after every coding session. 
 The code to do that is: 
     git pull 
     git add . 
@@ -29,4 +29,4 @@ They will also add the new topic to the progress.txt file with a quick message o
 
 There is a requirments.txt file as well which contains all the libraries which we will use. It will be written to in the end. 
 
-These are the guidelines so far but they will be ammended as we figure out the project managment.
+These are the guidelines so far, but they will be ammended as we figure out the project managment.

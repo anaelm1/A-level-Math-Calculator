@@ -18,8 +18,7 @@ The return dictionary contains:
 ''' 
 
 import math
-import sympy as sp #for factoring
-from sympy import pi, E, I, S, Number #for rounding
+from sympy import *
 from helperFunctions import *
 
 x = sp.Symbol('x')

@@ -15,6 +15,7 @@ from Binomial import Binomial
 from Integration import integration
 from Differentiation import differentiation
 from Arithmetic import Arithmetic
+from Geometric import Geometric
 from helperFunctions import *
 
 app = Flask(__name__)
@@ -23,26 +24,6 @@ app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'local-development-fallback-
 
 @app.route("/", methods=["GET", "POST"])
 def index(): 
-    topics =  [
-    {'Quadratics':['1. Middle Term Breaking (Factoring)', 
-                  '2. Completing the Square', 
-                  '3. Quadratic Formula',
-                  '4. Discriminant Analysis',
-                  '5. Disguised Quadratics']},
-    {'Trigonometry':['1. Equations']},
-    {'Binomial Expansion':['1. Expansion',
-            '2. Coffecent of X term',
-            '3. Expansion Multiplied by another bracket',
-            '4. 1 Unknown variable '
-            '5. 1 unknown variable with 2 brackets']},
-    {'Differentiation': ['1. Normal Derivative',
-    '2. Equation of normal/Tangent with x coordinate',
-    '3. Equation of normal/Tangent with y coordinate',
-    '4. Coordinates of stationary point',
-    '5. Double Derivative',
-    '6. Unknown variable with x Coordinate',
-    '7. Nature of Stationary Point']},
-    {'Integration':['1. Basic]']}]
     if request.method == "POST":
         session["topic"] = request.form.get("topic")
         session["subTopic"] = request.form.get("subTopic")
