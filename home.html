@@ -16,24 +16,42 @@
             }
 
             .listOfTopics{
-                display: flex;
-                flex-direction: column;
+                display: grid;
+                grid-auto-flow: row;
+                max-width:800px;
+                min-width: 500px;
                 gap: 15px;
+
             }
 
             .topicListButtons{
+                width:100%;
+                border: none;
+                background-color: transparent;
+                display: grid;
+                grid-auto-flow: column;
+                grid-template-columns: 100px 1fr 75px;
+                /* flex-direction: row; */
+                align-items: center;
+                align-content: space-between;
+                /* align-items:stretch; */
+                gap: 30px;
+                
+
+            }
+
+            .buttonDiv{
                 border-color: #dfe1e4;
                 padding: 25px;
                 background-color: #f6f7f9;
                 border-style:solid;
                 border-radius: 25px;
-                min-height: 120px;
-                min-width: 700px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                gap: 20px;
 
+
+                /* display: grid;
+                grid-template-columns: ; */
+                /* min-height: 120px;
+                min-width: 700px; */
             }
 
             .textHolder{
@@ -61,6 +79,19 @@
                 color: #696d72;
             }
 
+            .topicImage{
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                border-color: #dfe1e4;
+                border-style: solid;
+                border-radius: 16px;
+            }
+
+            .arrowHolder1{
+                width: 75px;
+            }
+
             .arrowHolder{
                 border: #dfe1e4;
                 border-width: 2px;
@@ -68,7 +99,7 @@
                 border-radius: 100%;
                 object-fit: cover;     
                 transform: rotate(180deg); 
-                padding: 40%;
+                padding: 20px;
                 width: 25px;  
                 transition: 0.5s;     
             }
@@ -83,6 +114,31 @@
             .imgButtonClick{
                 transform: rotate(275deg); 
             }
+
+
+            .subTopics{
+                display: grid;
+                /* display: list-item; */
+                row-gap: 10px;
+                padding-top: 30px;
+                /* list-style-type: "➔ "; */
+            }
+
+            .subTopicButton{
+                text-align: left;
+                font-family: Inter;
+                font-size: 14px;
+                text-align: start;
+                color: #696d72;
+                width: fit-content;
+                background-color: transparent;
+                border: none;
+
+            }
+
+            .subTopicButton::after{
+                color: #696d72;
+            }
         </style>
 
     </head>
@@ -96,12 +152,49 @@
     <script>
         const topicList = [
             {topic : "Quadratics",
-            subtext: "Solve quadratic equations, find roots, and analyze quadratic functions.",
-            subtopics: ['Middle Term Breaking', "Completing Square", "Quadratic Formula", "Discriminant", "Disguised Quadratic"]},
-            {topic : "Binomial Theorem", subtext: "Expand binomial expressions and calculate specific terms or coefficients."},
-            {topic : "Trigonometry", subtext: "Calculate trigonometric ratios, angles, and solve trigonometric equations."},
-            {topic : "Differentiation", subtext: "Differentiate functions and calculate gradients, stationary points, and rates of change."},
-            {topic : "Integration", subtext: "Integrate functions and calculate definite integrals and areas under curves."}
+                subtext: "Solve quadratic equations, find roots, and analyze quadratic functions.",
+                subtopics: [
+                    {id : 1.1, name: 'Middle Term Breaking'},
+                    {id : 1.2, name: "Completing Square"},
+                    {id : 1.3, name: "Quadratic Formula"},
+                    {id : 1.4, name: "Discriminant"},
+                    {id : 1.5, name: "Disguised Quadratic"}
+                ]},
+
+            {topic : "Binomial Theorem",
+                subtext: "Expand binomial expressions and calculate specific terms or coefficients.",
+                subtopics: [
+                    {id : 2.1, name: "Find Coeffecint of X to Power N"},
+                    {id : 2.2, name: "Find Complete expantion upto a power of X"},
+                    {id : 2.3, name: "Find the value of an unknown varible using coeffecient of X"},
+                    {id : 2.4, name:  "Find the value of an unknown varible using coeffecient of X in 2 Brackets"}
+                ]},
+
+            {topic : "Trigonometry",
+                subtext: "Calculate trigonometric ratios, angles, and solve trigonometric equations.",
+                subtopics: [
+                    {id : 3.1, name: "Equations"},
+                    {id : 3.2, name: "Graphs"}
+                ]},
+
+            {topic : "Differentiation",
+                subtext: "Differentiate functions and calculate gradients, unknowns and stationary points",
+                subtopics: [
+                    {id : 4.1, name: "Equation of Line Using X Coordinate"},
+                    {id : 4.2, name: "Equation of Line Using Y Coordinate"},
+                    {id : 4.3, name: "Coordinates of Stationary Point"},
+                    {id : 4.4, name:  "Find value of an unknown using a X Coordinate"},
+                    {id : 4.5, name:  "Find value of an unknown using a Y Coordinate"},
+                    {id : 4.6, name: "Nature of Stationary Point"},
+                    {id : 4.7, name: "Find Derivative"},
+                    {id : 4.8, name: "Find Double Derivative"}
+                ]},
+            {topic : "Integration",
+                subtext: "Integrate functions and calculate definite integrals and areas under curves.",
+                subtopics: [
+                    {id : 5.1, name: "Integration of an Equation"},
+                    {id : 5.2, name: "Integration of an Equation with Limits"}
+                ]}
         ];
         lenTopics = topicList.length
         
@@ -114,7 +207,9 @@
             `
             <div class=buttonDiv> 
                 <button class=topicListButtons> 
-                    <span class=buttonImage>Test Image</span>
+                    <span class=buttonImage>
+                        <img src=IMG\\${topicList[i].topic}.jpg class="topicImage">   
+                    </span>
                     <span class=textHolder>
                         <span class=buttonTitle>${topicList[i].topic}</span> 
                         <span class=buttonText>${topicList[i].subtext}</span> 
@@ -128,11 +223,6 @@
         };
 
         document.querySelector(".listOfTopics").innerHTML = newHTML
-
-
-
-
-
 
 
 
@@ -160,36 +250,88 @@
         // then it adds it to the end of the buttonDiv 
 
 
+        // takes the active div as the parameter
+        // finds all the sub topic buttons using querySelectorAll 
+        // then using forEach check if they are clicked
+        // if clicked it uses event.stopPropagation to not let the parent code know the event has occured
+
+        function subTopicButtonClick(topicdiv) {
+
+            const subTopicButtons = topicdiv.querySelectorAll(".subTopicButton")
+                subTopicButtons.forEach(subTopicButton => {
+                    subTopicButton.addEventListener('click', (event) => {
+                        // console.log(subTopicButton.id)
+                        event.stopPropagation();
+                    })
+                    })}
+        
+        // takes the acive div as a parameter
+        // adds a new class to find in future 
+        // converts the list from querySelectorAll into an array using Array.from
+        // find the number of subtopics by .indexOf
+        // runs a loop and increment into the html fo reach
+        // edits the innerHTML of the container
+
+
+        function subTopicMenuAdd(topicdiv) {
+            topicdiv.classList.add('activeTopic')
+            subTopicHTML = `
+            <form class="subTopicsForm">
+                <div class="subTopics">
+            `
+            arrayPosition = Array.from(topicButtons).indexOf(topicdiv)
+            subtopiclen = (topicList[arrayPosition].subtopics).length
+            for (let i = 0; i < subtopiclen; i++){
+                subTopicHTML += `
+                    <button class="subTopicButton" id="${topicList[arrayPosition].subtopics[i].id}">${topicList[arrayPosition].subtopics[i].name}</button>
+                `
+            }
+            subTopicHTML+=`
+                </div>
+            </form>
+            `
+            // topicdiv.querySelector(".textHolder").innerHTML += subTopicHTML
+            topicdiv.insertAdjacentHTML("beforeend", subTopicHTML);
+            subTopicButtonClick(topicdiv)
+        }
+
+
         const topicButtons = document.querySelectorAll(".buttonDiv")
         topicButtons.forEach(topicButton => {
             topicButton.addEventListener('click', () => {
-                const subTopicsELement = topicButton.querySelector(".subTopics")
+                OtherMenuClose(topicButton)
+                MenuLoader(topicButton)
+            })})
+
+
+        function MenuLoader(topicButton) {
+            
+            const subTopicsELement = topicButton.querySelector(".subTopicsForm")
+
                 if (!subTopicsELement) {
-                    topicButton.classList.add('activeTopic')
-                    subTopicHTML = `
-                    <div class="subTopics">
-                    `
-                    arrayPosition = Array.from(topicButtons).indexOf(topicButton)
-                    subtopiclen = (topicList[0].subtopics).length
-                    for (let i = 0; i < subtopiclen; i++){
-                        subTopicHTML += `
-                        <button class="subTopicButton">${topicList[0].subtopics[i]}
-                        `
-                    }
-                    subTopicHTML+=`
-                    </div>
-                    `
-                    document.querySelector(".activeTopic").innerHTML += subTopicHTML
+                    subTopicMenuAdd(topicButton)
+                    // subTopicButtonClick(topicButton)
                 } else {
                     subTopicsELement.remove()
                     topicButton.classList.remove('activeTopic')
                 }
-                
-            })
-        })
+            
+        }
 
 
-
+        function OtherMenuClose(topicButton) {
+            const activeMenues = document.querySelectorAll(".activeTopic")
+            if (activeMenues) {
+                activeMenues.forEach(activeMenu => {
+                    if (activeMenu != topicButton) {
+                        const subTopicsELement = activeMenu.querySelector(".subTopics")
+                        subTopicsELement.remove()
+                        activeMenu.classList.remove('activeTopic')
+                    }
+                })
+            }
+        }
+        
 
 
 

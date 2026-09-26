@@ -22,7 +22,7 @@ def integration(method, expression, argument1):
                 case 1:
                     return eqnIntegration(expression, argument1)
                 case 2:
-                    return eqnIntegrationRoots(expression, argument1)
+                    return eqnIntegrationLimits(expression, argument1)
         except:
             return (ReturnDict(False))
 
@@ -49,7 +49,7 @@ def eqnIntegration(expression, Coordinates):
     except:
         return (ReturnDict(False))
 
-def eqnIntegrationRoots(expression, limits):
+def eqnIntegrationLimits(expression, limits):
     try:
         expression = sp.sympify(expression)
         integral = sp.integrate(expression, (x, limits[0], limits[1]))
