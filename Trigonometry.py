@@ -39,33 +39,29 @@ def Trigonometry(method=None, mode="RAD", expression=None, range_lower=None, ran
         return (ReturnDict(False))
 
 
-def Equations(mode, expression, range_lower, range_uppper): #everything in Rad
+def Equations(mode, expression, rangeower, range_uppper): #everything in Rad
     try:
-        if mode == 'deg':
-            range_uppper = math.radians(range_uppper)
+        x = sp.Symbol("x")
+        if mode == "DEG":
+            range_upper = math.radians(range_upper)
             range_lower = math.radians(range_lower)
+
         parts = expression.split("=", 1)
-        LHS = parts[0]
-        RHS = parts[1]
-        if LHS: 
-            LHS = sp.sympify(LHS)
-        if RHS:
-            RHS = sp.sympify(RHS)
+        if len(parts) != 2:
+            return ReturnDict(False)
 
-        equation = sp.Eq(LHS, RHS)
-
-        solutions = sp.solveset(equation, x, domain= sp.Interval(range_lower, range_uppper))
+        equation = sp.Eq(sp.sympify(parts[0]), sp.sympify(parts[1]))
+        solutions = sp.solveset(equation, x, domain=sp.Interval(range_lower, range_upper))
         answers = []
         for solution in solutions:
-            if mode == 'deg':
-                solution = math.degrees(solution)
-                answers.append(f"x = {solution:.1f} OR x = {solution:.3f}")
+            if mode == "DEG":
+                degree_value = math.degrees(float(solution.evalf()))
+                answers.append(f"x = {degree_value:.1f} OR x = {degree_value:.3f}")
             else:
                 answers.append(f"x = {solution} OR x = {float(solution.evalf()):.3f}")
 
-        if answers == []:
-            return (ReturnDict(False))
-        
-        return ReturnDict(solved = True, error = None, answer_string = answers)
-    except:
+        if not answers:
+            return ReturnDict(False)
+        return ReturnDict(solved=True, answer_string=answers)
+    except:        
         return (ReturnDict(False))
