@@ -14,3 +14,6 @@ Rapheal:
 18/09/2026: I have started work on differentiation. still room for improvement
 19/09/2026: I have continued with differentiation and made serveral new functions
 20/09/2026: I have started work on integration, improved quadratics and differentiation for final use
+25/09/2026: I started work on the UI of the web app
+26/09/2026: More work on the UI, make the UI functional by adding javascript
+27/09/2026: Worked mainly on grid layout of the calculator and final touches on the UI
