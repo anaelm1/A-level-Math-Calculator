@@ -1,0 +1,136 @@
+body{
+    background-color: #f6f7f9;
+}
+
+.mainDiv{
+    justify-self: center;
+    
+    
+}
+
+.listOfTopics{
+    display: grid;
+    grid-auto-flow: row;
+    max-width:800px;
+    min-width: 500px;
+    gap: 15px;
+
+}
+
+.topicListButtons{
+    width:100%;
+    border: none;
+    background-color: transparent;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 100px 1fr 75px;
+    /* flex-direction: row; */
+    align-items: center;
+    align-content: space-between;
+    /* align-items:stretch; */
+    gap: 30px;
+}
+
+.buttonDiv{
+    border-color: #dfe1e4;
+    padding: 25px;
+    background-color: #f6f7f9;
+    border-style:solid;
+    border-radius: 25px;
+}
+
+.textHolder{
+    flex: 1;
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+
+
+    
+}
+.buttonTitle{
+    font-family: Inter;
+    font-size: 20px;
+    text-align: start;
+    color: #1d1f23;
+    font-weight: 600;
+    
+
+}
+.buttonText{
+    font-family: Inter;
+    font-size: 14px;
+    text-align: start;
+    color: #696d72;
+}
+
+.topicImage{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-color: #dfe1e4;
+    border-style: solid;
+    border-radius: 16px;
+}
+
+.arrowHolder1{
+    width: 75px;
+}
+
+.arrowHolder{
+    border: #dfe1e4;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 100%;
+    object-fit: cover;     
+    transform: rotate(180deg); 
+    padding: 20px;
+    width: 25px;  
+    transition: 0.5s;     
+}
+
+.arrowHolder:hover{
+    content: url("IMG/visily-arrow-left-white.png");
+    background-color: #6366f1;
+    border: #6366f1;
+    /* transform: rotate(90deg); */
+}
+
+.activeArrow{
+    transform: rotate(275deg);
+    content: url("IMG/visily-arrow-left-white.png");
+    background-color: #6366f1;
+    border: #6366f1;
+}
+
+.imgButtonClick{
+    transform: rotate(275deg); 
+}
+
+
+.subTopics{
+    display: grid;
+    /* display: list-item; */
+    row-gap: 10px;
+    padding-top: 20px;
+    /* list-style-type: "➔ "; */
+}
+
+.subTopicButton{
+    text-align: left;
+    font-family: Inter;
+    font-size: 14px;
+    text-align: start;
+    color: #696d72;
+    width: fit-content;
+    background-color: transparent;
+    border: none;
+}
+
+.subTopicButton:hover{
+    color:#6366f1
+}
+
+.subTopics{
+    margin-left: 150px;
+}
