@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graph Window</title>
+<body>
+    {% if plotUrl %}
+        <h3>Interactive Window:</h3>
+        <div id="matplotlib-container">
+            <img src="data:image/png;base64,{{ plotUrl }}" alt="Trigonometric Plot">        
+        </div>
+    {% else %}
+        <p>No graph available to render.</p>
+    {% endif %}
+</body>
+</html>

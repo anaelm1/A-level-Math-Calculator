@@ -16,7 +16,9 @@ from Integration import integration
 from Differentiation import differentiation
 from Arithmetic import Arithmetic
 from Geometric import Geometric
+from Plotter import Plotter
 from helperFunctions import *
+import math
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'local-development-fallback-key')
@@ -108,3 +110,18 @@ def answer():
     cleanedInput = inputCleaner(userExpression)
     return render_template("answer.html")
 
+@app.route("/graph")
+def graph():
+    userExpression = session['userExpression']
+    cleanedInput = inputCleaner(userExpression)
+    mode = session['mode']
+    lower = session['lowerLimit']
+    upper = session['upperLimit']
+
+    limit0Str = str(lower).replace("sp.", "math.")
+    limit1Str = str(upper).replace("sp.", "math.")
+    expression = expression.replace("sp.", "math.")
+
+    plotUrl = Plotter(cleanedInput, mode, [limit0Str, limit1Str])
+
+    return render_template("graph.html", plotUrl=plotUrl)

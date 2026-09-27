@@ -7,7 +7,7 @@ The subtopics are:
     4. Discriminant Analysis 
     5. Hidden / Disguised Quadratics
     6. Grapher of Quadratic curve (THIS WILL BE IMPLEMENTED IN THE GRAPHING CALC PART. IT IS NOT WORTH IT TO IMPLEMENT IT HERE)
-The parameters are (method, equation_str).
+The parameters are (method, expression).
 The return dictionary contains:
 {
 'solved' : bool (true/false),
@@ -24,10 +24,10 @@ from helperFunctions import *
 x = sp.Symbol('x')
 
 
-def Quadratics(method=None, equation_str=None): #TODO: I need to make the input more user friendly as the current formating is ** for powers
+def Quadratics(method=None, expression=None): #TODO: I need to make the input more user friendly as the current formating is ** for powers
     try:
-        equation_str = sp.sympify(equation_str)
-        poly = sp.Poly(equation_str, x)
+        expression = sp.sympify(expression)
+        poly = sp.Poly(expression, x)
         a = float(poly.coeff_monomial(x**2))
         b = float(poly.coeff_monomial(x**1))
         c = float(poly.coeff_monomial(x**0))
@@ -41,7 +41,7 @@ def Quadratics(method=None, equation_str=None): #TODO: I need to make the input 
             case 4:
                 return Discriminant(a, b, c)
             case 5:
-                return DisguisedQuadratic(equation_str)
+                return DisguisedQuadratic(expression)
             case _:
                 return (ReturnDict(False))
     except:
@@ -132,10 +132,10 @@ def Discriminant(a, b, c): #answerstring[0] = discriminant value, answerstring[1
 
 
 
-def DisguisedQuadratic(equation_str): #answerstring[0] = root1, answerstring[1] = root2...
+def DisguisedQuadratic(expression): #answerstring[0] = root1, answerstring[1] = root2...
   try:
-    equation = sp.sympify(equation_str)
-    solutions = sp.solve(equation, x)
+    expression = sp.sympify(expression)
+    solutions = sp.solve(expression, x)
     answers = []
     for solution in solutions:
         answers.append(f"x = {roundingPlaces(solution)}")
