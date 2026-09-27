@@ -1,5 +1,5 @@
 body{
-    background-color: #f6f7f9;
+    background-color: #d4d9d5;
 }
 
 .mainDiv{
@@ -32,9 +32,9 @@ body{
 }
 
 .buttonDiv{
-    border-color: #dfe1e4;
+    border-color: #748c9280;
     padding: 25px;
-    background-color: #f6f7f9;
+    background-color: #d4d9d5;
     border-style:solid;
     border-radius: 25px;
 }
@@ -68,7 +68,7 @@ body{
     width: 100px;
     height: 100px;
     object-fit: cover;
-    border-color: #dfe1e4;
+    border-color: #748c9280;
     border-style: solid;
     border-radius: 16px;
 }
@@ -78,7 +78,7 @@ body{
 }
 
 .arrowHolder{
-    border: #dfe1e4;
+    border: #748c9280;
     border-width: 2px;
     border-style: solid;
     border-radius: 100%;
@@ -91,16 +91,16 @@ body{
 
 .arrowHolder:hover{
     content: url("IMG/visily-arrow-left-white.png");
-    background-color: #6366f1;
-    border: #6366f1;
+    background-color: #2f3843;
+    border: #2f3843;
     /* transform: rotate(90deg); */
 }
 
 .activeArrow{
     transform: rotate(275deg);
     content: url("IMG/visily-arrow-left-white.png");
-    background-color: #6366f1;
-    border: #6366f1;
+    background-color: #2f3843;
+    border: #2f3843;
 }
 
 .imgButtonClick{
@@ -128,9 +128,48 @@ body{
 }
 
 .subTopicButton:hover{
-    color:#6366f1
+    color:#2f3843
 }
 
 .subTopics{
     margin-left: 150px;
+}
+
+.footer{
+    display: block;
+}
+
+.footerDiv{
+    /* position: absolute; */
+    bottom: 0px;
+    margin-top: 50px;
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-top: 2px solid #a4b2b3;
+    padding: 20px 0px;
+    color: #2f3843;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 12px;
+    justify-items: center;
+    align-items: center;
+
+}
+
+.footertop{
+    margin-left: 30px;
+    width: inherit;
+    align-items: start;
+    text-align: left;
+}
+
+.footerbottom{
+    width: inherit;
+    margin-right: 30px;
+    /* padding: 0 30px; */
+    display: grid;
+    grid-auto-flow: column;
+    align-content:space-between;
+    justify-content: space-between;
 }

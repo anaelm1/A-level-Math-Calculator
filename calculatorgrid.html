@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+
+        <style>
+            body{
+                background-color: #d4d9d5;
+                font-family: Inter;
+                font-weight: 500;
+                font-size: 18px;
+            }
+
+            .calc-form{
+                justify-self: center;
+                width: fit-content;
+                background-color: #d4d9d5;
+                padding: 24px;
+                border-radius: 12px;
+                box-shadow: 0px 2px 4px #0000001A, 0px 4px 6px #0000001A;
+
+            }
+
+            .button-rows{
+                display: grid;
+                grid-auto-flow: column;
+                grid-template-columns: repeat(4, 107px);
+                gap: 8px;
+            }
+
+            .button-grid{
+                display: grid;
+                grid-auto-flow: row;
+                gap: 8px;
+                
+            }
+
+            .grid-buttons{
+                height: 56px;
+                padding-left: 16px;
+                padding-right: 16px;
+                border-radius: 10px;
+                border-color: #124e65BF;
+                background-color: #748c92;
+                border-style: solid;
+                color: #2f3843;
+                border-width: 1px;
+                font-family: Inter;
+                font-weight: 500;
+                font-size: 18px;
+            }
+
+            .last-row{
+                grid-template-columns: 107px 107px 1fr;
+            }
+
+            .btn-num{
+                background-color: #d4d9d5; 
+                color: #1d1f23;
+                border-color: #124e6540;
+            }
+
+            .big-btn{
+                background-color: #2f3843;
+                border-color: #2f3843;
+                color: #fcfcff;
+                
+            }
+
+            .big-btn2{
+                background-color: #8B1E22;
+                border-color: #8B1E22;
+                color: #fcfcff;
+                
+            }
+
+            .text-box-holder{
+                width: 452px;
+                height: 140px;
+                background-color: #202a30;
+                border-radius: 12px;
+                border-color: #3A3C41FF;
+                margin-bottom: 24px;
+                display: grid;
+                justify-content: center;
+                grid-template-rows: min-content;
+                gap: 8px;
+                
+
+            }
+
+            .placeholder-text{
+                color: #d4d9d5; 
+                margin: 39px 25px 0px 25px;
+                height: 28px;
+
+            }
+
+            .text-box{
+                height: 40px;
+                background-color: transparent;
+                border: none;
+                color: #d4d9d5;
+                font-family: Inter;
+                font-size: 30px;
+                font-weight: 700;
+                margin: 0 25px;
+                text-align: right;
+            }
+
+
+
+        </style>
+    </head>
+    <body>
+        <form class="calc-form" id="calcForm" action="/solver" method="POST">
+            <div class="text-box-holder">
+                <span class="placeholder-text">Enter Expression</span>
+                <input type="text" class="text-box" id="userExpression" name="userExpression" value="{{ userExpression or '' }}" autocomplete="off">
+
+            </div>
+
+            <div class="button-grid">
+                <div class="button-rows">
+                    <button class="btn-ang grid-buttons big-btn" id="btn_ang" value="DEG">DEG</button>
+                    <button class="btn-op grid-buttons" id="btn_infinity" value="oo">oo</button>
+                    <button class="btn-op grid-buttons" id="btn_k" value="k">k</button>
+                    <button class="btn-op grid-buttons" id="btn_x" value="x">x</button>
+                </div>
+                <div class="button-rows">
+                    <button class="btn-func grid-buttons" id="btn_asin" value="sin⁻¹(">sin⁻¹</button>
+                    <button class="btn-func grid-buttons" id="btn_acos" value="cos⁻¹(">cos⁻¹</button>
+                    <button class="btn-func grid-buttons" id="btn_atan" value="tan⁻¹(">tan⁻¹</button>
+                    <button class="btn-func grid-buttons" id="btn_e" value="e">e</button>
+                </div>
+                <div class="button-rows">
+                    <button class="btn-func grid-buttons" id="btn_sin" value="sin(">sin</button>
+                    <button class="btn-func grid-buttons" id="btn_cos" value="cos(">cos</button>
+                    <button class="btn-func grid-buttons" id="btn_tan" value="tan(">tan</button>
+                    <button class="btn-func grid-buttons" id="btn_pi" value="π">π</button>
+                </div>
+                <div class="button-rows">
+                    <button class="btn-func grid-buttons" id="btn_cbrt" value="√(">∛</button>
+                    <button class="btn-func grid-buttons" id="btn_cube" value="^2">x³</button>
+                    <button class="btn-func grid-buttons" id="btn_pow" value="^">xⁿ</button>
+                    <button class="btn-func grid-buttons" id="btn_equalto" value="=">=</button>
+                </div>
+                <div class="button-rows">
+                    <button class="btn-func grid-buttons" id="btn_sqr" value="√(">√</button>
+                    <button class="btn-func grid-buttons" id="btn_sqrt" value="^2">x²</button>
+                    <button class="btn-func grid-buttons" id="btn_lparen" value="(">(</button>
+                    <button class="btn-func grid-buttons" id="btn_rparen" value=")">)</button>
+                </div>
+                <div class="button-rows">
+                    <button class="btn-action grid-buttons big-btn2" id="btn_ac" value="AC">AC</button>
+                    <button class="btn-action grid-buttons big-btn2" id="btn_del" value="DEL">DEL</button>
+                    <button class="btn-op grid-buttons" id="btn_per" value="%">%</button>
+                    <button class="btn-op grid-buttons" id="btn_mul" value="">/</button>
+                </div>
+                <div class="button-rows">
+                    <button class="btn-num grid-buttons" id="btn_7" value="7">7</button>
+                    <button class="btn-num grid-buttons" id="btn_8" value="8">8</button>
+                    <button class="btn-num grid-buttons" id="btn_9" value="9">9</button>
+                    <button class="btn-op grid-buttons" id="btn_mul" value="">x</button>
+                </div>
+                <div class="button-rows">
+                    <button class="btn-num grid-buttons" id="btn_4" value="4">4</button>
+                    <button class="btn-num grid-buttons" id="btn_5" value="5">5</button>
+                    <button class="btn-num grid-buttons" id="btn_6" value="6">6</button>
+                    <button class="btn-op grid-buttons" id="btn_sub" value="-">-</button>
+                </div>
+                <div class="button-rows">
+                    <button class="btn-num grid-buttons" id="btn_1" value="1">1</button>
+                    <button class="btn-num grid-buttons" id="btn_2" value="2">2</button>
+                    <button class="btn-num grid-buttons" id="btn_3" value="3">3</button>
+                    <button class="btn-op grid-buttons" id="btn_add" value="+">+</button>
+                </div>
+                <div class="button-rows last-row">
+                    <button class="btn-num grid-buttons" id="btn_0" value="0">0</button>
+                    <button class="btn-num grid-buttons" id="btn_dot" value=".">.</button>
+                    <button class="btn-op grid-buttons big-btn" id="btn_solve" value="solve">Solve</button>
+                </div>
+            </div>
+        </form>
+
+
+
+        <script>
+       
+
+
+
+
+        </script>
+    </body>
+</html>
