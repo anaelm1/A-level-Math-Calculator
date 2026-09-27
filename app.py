@@ -12,8 +12,8 @@ from flask import Flask, flash, redirect, render_template, request, jsonify, ses
 from Quadratics import Quadratics 
 from Trigonometry import Trigonometry
 from Binomial import Binomial
-from Integration import integration
-from Differentiation import differentiation
+from Integration import Integration
+from Differentiation import Differentiation
 from Arithmetic import Arithmetic
 from Geometric import Geometric
 from Plotter import Plotter
@@ -27,69 +27,70 @@ app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'local-development-fallback-
 @app.route("/", methods=["GET", "POST"])
 def index(): 
     if request.method == "POST":
-        buttonNumber = request.form.get("subTopicId") 
-        print(buttonNumber)
-        return redirect("/solver")
+        session["buttonNumber"] = request.form.get("subTopicId") 
+        topic, session["subTopic"] = session["buttonNumber"].split(".")
+        match topic:
+            case 1:
+                session["topic"] = "Quadratics"
+            case 2:
+                session["topic"] = "Binomial"
+            case 3:
+                session["topic"] = "Arithmetic"
+            case 4:
+                session["topic"] = "Geometric"
+            case 5:
+                session["topic"] = "Trigonometry"
+            case 6:
+                session["topic"] = "Differentiation"
+            case 7:
+                session["topic"] = "Integration"
+        return redirect("/grid")
     else: 
         return render_template("index.html")
 
 
-@app.route("/solver", methods=["GET", "POST"])
-def solver():
-    buttonsData = [
-        #Row 1: Inverse Trig x y 
-        {"id": "btn_asin", "label": "sin⁻¹", "value": "sin⁻¹(", "css_class": "btn-func"},
-        {"id": "btn_acos", "label": "cos⁻¹", "value": "cos⁻¹(", "css_class": "btn-func"},
-        {"id": "btn_atan", "label": "tan⁻¹", "value": "tan⁻¹(", "css_class": "btn-func"},
-        {"id": "btn_x", "label": "x", "value": "x", "css_class": "btn-op"},
-        {"id": "btn_y", "label": "y", "value": "y", "css_class": "btn-op"},
+@app.route("/grid", methods=["GET", "POST"])
+def grid():
+    parameters = {
+    1.1: "Enter Exp",
+    1.2: "Enter Exp",
+    1.3: "Enter Exp",
+    1.4: "Enter Exp",
+    1.5: "Enter Exp",
 
-        #Row 2: Standard Trig 
-        {"id": "btn_sin", "label": "sin", "value": "sin(", "css_class": "btn-func"},
-        {"id": "btn_cos", "label": "cos", "value": "cos(", "css_class": "btn-func"},
-        {"id": "btn_tan", "label": "tan", "value": "tan(", "css_class": "btn-func"},
+    2.1: "Enter Exp, Power",
+    2.2: "Enter Exp, Power",
+    2.3: "Enter Exp, Power, Range",
+    2.4: "Enter Exp, Power, Range",
 
-        # Row 3: Powers & Roots 
-        {"id": "btn_sqr", "label": "x²", "value": "^2", "css_class": "btn-func"},
-        {"id": "btn_cube", "label": "x³", "value": "^3", "css_class": "btn-func"},
-        {"id": "btn_pow", "label": "xⁿ", "value": "^", "css_class": "btn-func"},
-        {"id": "btn_sqrt", "label": "√", "value": "√(", "css_class": "btn-func"},
-        {"id": "btn_cbrt", "label": "∛", "value": "∛(", "css_class": "btn-func"},
+    3.1: "Enter n, d, a" ,
+    3.2: "Enter T1, T2" ,
+    3.3: "Enter n, d, a" ,
+    3.4: "Enter n, T1, T2" ,
+    3.5: "Enter d, a" ,
 
-        # Row 6: Brackets Constants
-        {"id": "btn_lparen", "label": "(", "value": "(", "css_class": "btn-func"},
-        {"id": "btn_rparen", "label": ")", "value": ")", "css_class": "btn-func"},
-        {"id": "btn_pi", "label": "π", "value": "π", "css_class": "btn-func"},
-        {"id": "btn_e", "label": "e", "value": "e", "css_class": "btn-func"},
+    4.1: "Enter n, d, a" ,
+    4.2: "Enter T1, T2" ,
+    4.3: "Enter n, d, a" ,
+    4.4: "Enter n, T1, T2" ,
+    4.5: "Enter d, a" ,
 
-        # Row 7: Keypad (7-9)
-        {"id": "btn_7", "label": "7", "value": "7", "css_class": "btn-num"},
-        {"id": "btn_8", "label": "8", "value": "8", "css_class": "btn-num"},
-        {"id": "btn_9", "label": "9", "value": "9", "css_class": "btn-num"},
-        {"id": "btn_infinity", "label": "oo", "value": "oo", "css_class": "btn-num"}, #double 0 is infinity is sympy
+    5.1: "Enter Angle Mode, Exp, Start, Stop" ,
+    5.2: "Enter Angle Mode, Exp, Start, Stop" ,
 
+    6.1: "Enter Exp, Line Type, X" ,
+    6.2: "Enter Exp, Line Type, Y, Range" ,
+    6.3: "Enter Exp, Range" ,
+    6.4: "Enter Exp, m, X, Range" ,
+    6.5: "Enter Exp, X cords" ,
+    6.6: "Enter Exp" ,
+    6.7: "Enter Exp" ,
 
-        # Row 8: Keypad (4-6) 
-        {"id": "btn_4", "label": "4", "value": "4", "css_class": "btn-num"},
-        {"id": "btn_5", "label": "5", "value": "5", "css_class": "btn-num"},
-        {"id": "btn_6", "label": "6", "value": "6", "css_class": "btn-num"},
-        {"id": "btn_mul", "label": "*", "value": "*", "css_class": "btn-op"},
-        {"id": "btn_div", "label": "÷", "value": "/", "css_class": "btn-op"},
+    7.1: "Enter Exp, Coordinates" ,
+    7.2: "Enter Exp, limits" }
 
-        # Row 9: Keypad (1-3) & Basic Operators 
-        {"id": "btn_1", "label": "1", "value": "1", "css_class": "btn-num"},
-        {"id": "btn_2", "label": "2", "value": "2", "css_class": "btn-num"},
-        {"id": "btn_3", "label": "3", "value": "3", "css_class": "btn-num"},
-        {"id": "btn_add", "label": "+", "value": "+", "css_class": "btn-op"},
-        {"id": "btn_sub", "label": "-", "value": "-", "css_class": "btn-op"},
-
-        # Row 10: 0, Decimal, Comma, delete equals to 
-        {"id": "btn_0", "label": "0", "value": "0", "css_class": "btn-num"},
-        {"id": "btn_dot", "label": ".", "value": ".", "css_class": "btn-num"},
-        {"id": "btn_equalsto", "label": "=", "value": "=", "css_class": "btn-op"},
-        {"id": "btn_del", "label": "DEL", "value": "DEL", "css_class": "btn-action"}
-    ]
-
+    number = float(session['buttonNumber'])
+    outputedString = parameters[number]
     if request.method == "POST":
         session['userExpression'] = request.form.get('userExpression', '')
         if request.form.get("solve") == "True" or "solve" in request.form:
@@ -98,10 +99,10 @@ def solver():
             else:
                 return redirect("/answer")
         else:
-            return render_template('solver.html', userExpression=session['userExpression'], buttonsData=buttonsData)
+            return render_template('grid.html', userExpression=session['userExpression'], outputedString=outputedString)
     else:
         session.pop('userExpression', None)
-        return render_template('solver.html', userExpression="", buttonsData=buttonsData)
+        return render_template('grid.html', userExpression="", outputedString=outputedString)
 
     
 @app.route("/answer")

@@ -16,13 +16,13 @@ from helperFunctions import *
 import re
 
 
-def Plotter(expression=None, mode='RAD', limits=None):
+def Plotter(expression=None, mode='RAD', range_lower=None, range_upper=None):
     #try:
-        if not expression or not limits:
+        if not expression or not range_lower or not range_upper:
             return (ReturnDict(False))
                 
-        lowerlimit = float(sp.N(limits[0]))
-        upperlimit = float(sp.N(limits[1]))
+        lowerlimit = float(sp.N(range_lower))
+        upperlimit = float(sp.N(range_upper))
 
         functions = r'\b(sin|cos|tan)\s*\(' #\b is boundary, sin cos tan are the options, \s* is 0 gaps or more, open bracket is the opening 
         period = 0

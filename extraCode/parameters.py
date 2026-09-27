@@ -37,7 +37,4 @@ parameters = {
 
     {7.1: "Enter Exp, Coordinates"},
     {7.2: "Enter Exp, limits"}
-
-
-
 }

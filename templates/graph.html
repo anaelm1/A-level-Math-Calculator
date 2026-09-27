@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
     <meta charset="UTF-8">
     <title>Graph Window</title>
 <body>
+    <header>
+    <div class="headerholder">
+        <div class="design">^-^</div>
+        <div class="headerdiv">AS Level Calculator</div>
+        <div class="design"><33</div>
+    </div>
+    </header>
     {% if plotUrl %}
         <h3>Interactive Window:</h3>
         <div id="matplotlib-container">
@@ -12,5 +24,14 @@
     {% else %}
         <p>No graph available to render.</p>
     {% endif %}
+    <footer>
+    <div class="footerDiv">
+        <div class="footerleft">
+                <div class="footertop">AS Level Calculator</div>
+                <div class="footerbottom">Made by Rapheal & Anael.</div>
+        </div>
+        <div class="footerright">Made for ThirdSpace HackClub</div>
+    </div>
+</footer>
 </body>
 </html>

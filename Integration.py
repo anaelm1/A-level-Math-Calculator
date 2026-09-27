@@ -15,7 +15,7 @@ from helperFunctions import *
 x = sp.symbols('x')
 
 #argument1 is either a list of xy or list of lowerlimit and upperlimit
-def integration(method, expression, argument1):
+def Integration(method, expression, argument1):
     if method and argument1 and expression:
         try:
             match method:

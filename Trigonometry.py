@@ -4,7 +4,7 @@ The subtopics are:
     1. Graphs (THIS WILL BE IMPLEMENTED IN THE GRAPHING CALC PART. IT IS NOT WORTH IT TO IMPLEMENT IT HERE)
     2. Equations (With range specified)
     3. Identities  
-The parameters are (method, mode, equation_str). Double equals to (==) for identities, Equals to (=) for equations.
+The parameters are (method, mode, expression). Double equals to (==) for identities, Equals to (=) for equations.
 The return dictionary contains:
 {
 'solved' : bool (true/false),
@@ -19,15 +19,18 @@ Pi is written like this sp.pi
 import math
 import sympy as sp #for solving
 from helperFunctions import *
+from Plotter import Plotter 
 x = sp.Symbol('x')
 
 
-def Trigonometry(method=None, mode=None, equation_str=None, range_lower=None, range_upper=None):
-    if method and mode and equation_str:
+def Trigonometry(method=None, mode="RAD", expression=None, range_lower=None, range_upper=None):
+    if method and mode and expression:
         try:
             match method:
                 case 1:
-                    return Equations(mode, equation_str, range_lower, range_upper)
+                    return Equations(mode, expression, range_lower, range_upper)
+                case 2:
+                    return Plotter(mode, expression, range_lower, range_upper)
                 case _:
                     return (ReturnDict(False))
         except:
@@ -36,12 +39,12 @@ def Trigonometry(method=None, mode=None, equation_str=None, range_lower=None, ra
         return (ReturnDict(False))
 
 
-def Equations(mode, equation_str, range_lower, range_uppper): #everything in Rad
-    #try:
+def Equations(mode, expression, range_lower, range_uppper): #everything in Rad
+    try:
         if mode == 'deg':
             range_uppper = math.radians(range_uppper)
             range_lower = math.radians(range_lower)
-        parts = equation_str.split("=", 1)
+        parts = expression.split("=", 1)
         LHS = parts[0]
         RHS = parts[1]
         if LHS: 
@@ -64,5 +67,5 @@ def Equations(mode, equation_str, range_lower, range_uppper): #everything in Rad
             return (ReturnDict(False))
         
         return ReturnDict(solved = True, error = None, answer_string = answers)
-    # except:
-    #     return (ReturnDict(False))
+    except:
+        return (ReturnDict(False))

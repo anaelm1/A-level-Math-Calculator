@@ -33,7 +33,7 @@ it is incased in try and if to ensure there are no crashed at any given point
 '''
 
 
-def differentiation(method=None, expression=None, argument1=None, argument2=None, argument3=None):
+def Differentiation(method=None, expression=None, argument1=None, argument2=None, argument3=None):
     if method and expression:
         try:
             match method:
