@@ -27,8 +27,8 @@ app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'local-development-fallback-
 @app.route("/", methods=["GET", "POST"])
 def index(): 
     if request.method == "POST":
-        session["topic"] = request.form.get("topic")
-        session["subTopic"] = request.form.get("subTopic")
+        buttonNumber = request.form.get("subTopicId") 
+        print(buttonNumber)
         return redirect("/solver")
     else: 
         return render_template("index.html")
