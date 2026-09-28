@@ -254,3 +254,6 @@ def graph():
     plotUrl = Plotter(cleanedInput, mode, [limit0Str, limit1Str])
 
     return render_template("graph.html", plotUrl=plotUrl)
+
+if __name__ == "__main__":
+    app.run()
