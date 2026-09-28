@@ -72,6 +72,7 @@ PARAMETERS = {
     7.2: "Enter Exp, limits" }
 
 def solveUserInput(topic, method,  rawInput):
+    rawInput = inputCleaner(rawInput)
     parts = splitArgs(rawInput)
     if not parts:
         return ReturnDict(False)

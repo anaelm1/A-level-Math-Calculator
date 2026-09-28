@@ -41,6 +41,7 @@ def unknownVariableFind(expression):
 #e as sp.E
 def inputCleaner(userInput):
     replacements = {
+        '^': '**',
         'sin⁻¹(': 'sp.asin(',
         'cos⁻¹(': 'sp.acos(',
         'tan⁻¹(': 'sp.atan(',
