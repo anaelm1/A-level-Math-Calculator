@@ -28,18 +28,18 @@ def Quadratics(method=None, expression=None): #TODO: I need to make the input mo
     try:
         expression = sp.sympify(expression)
         poly = sp.Poly(expression, x)
-        a = float(poly.coeff_monomial(x**2))
-        b = float(poly.coeff_monomial(x**1))
-        c = float(poly.coeff_monomial(x**0))
+        a = poly.coeff_monomial(x**2)
+        b = poly.coeff_monomial(x**1)
+        c = poly.coeff_monomial(x**0)
         match method:
             case 1:
                 return MiddleTerm(a, b, c)
             case 2:
-                return CompletingSquare(a, b, c)
+                return CompletingSquare(float(a), float(b), float(c))
             case 3:
                 return QuadraticFormula(a, b, c)
             case 4:
-                return Discriminant(a, b, c)
+                return Discriminant(float(a), float(b), float(c))
             case 5:
                 return DisguisedQuadratic(expression)
             case _:
@@ -88,9 +88,9 @@ def CompletingSquare(a, b, c): #answerstring[0] = factored form, answerstring[1]
         else:
             k_str = ""
 
-        if a == 1:
+        if a == 1 or a == 1.0:
             target_a = a
-        elif a == -1:
+        elif a == -1 or a == -1.0:
             target_a = "-"
         else: 
             target_a = str(roundingPlaces(a))

@@ -93,7 +93,7 @@ def completeExpansion(expression, maxPower):
     try:
         maxPower = int(maxPower)
         expression = sp.sympify(expression)
-        expansion = sp.poly(sp.expand(expression))
+        expansion = sp.poly(sp.expand(expression), x)
         result=""
         for i in range(maxPower +1):
             if i == 0:

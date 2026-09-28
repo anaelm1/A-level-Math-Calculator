@@ -17,10 +17,14 @@ import re
 
 
 def Plotter(expression=None, mode='RAD', range_lower=None, range_upper=None):
-    #try:
-        if not expression or not range_lower or not range_upper:
+    try:
+        if expression is None or range_lower is None or range_upper is None:
             return (ReturnDict(False))
-                
+
+        if isinstance(range_lower, (list, tuple)):
+            range_upper = range_lower[1]
+            range_lower = range_lower[0]  
+
         lowerlimit = float(sp.N(range_lower))
         upperlimit = float(sp.N(range_upper))
 
@@ -79,7 +83,7 @@ def Plotter(expression=None, mode='RAD', range_lower=None, range_upper=None):
 
         x = np.arange(lowerlimit, upperlimit + (step / 2), step)
 
-        y = f(x)
+        y = f(x) 
 
         plt.figure(figsize=(10, 4))
         plt.plot(x, y, label=f"y = {expression}", color="purple", linewidth=1.5)
@@ -104,8 +108,8 @@ def Plotter(expression=None, mode='RAD', range_lower=None, range_upper=None):
 
         return base64.b64encode(img_buf.getvalue()).decode("utf-8") 
 
-    #except:
-    #    return (ReturnDict(False))
+    except:
+        return (ReturnDict(False))
 
 #Testing
 #print(Plotter("cos(x)", "RAD", [-sp.pi, sp.pi]))
@@ -116,4 +120,4 @@ def Plotter(expression=None, mode='RAD', range_lower=None, range_upper=None):
 #print(Plotter("tan(x)", "RAD", [-math.pi / 4, math.pi / 4]))
 #print(Plotter("sin(x)", "DEG", [0, 360]))
 #print(Plotter("cos(x)", "DEG", [0, 360]))
-#print(Plotter("tan(x)", "DEG", [-45, 45]))
+#print(Plotter("tan(x)", "DEG", -45, 45))

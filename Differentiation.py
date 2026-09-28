@@ -258,7 +258,8 @@ def natureOfStationaryPoint(expression, xCords, derivative=None):
                 natures.append({xCord:"maximum point"})
             elif nature > 0:
                 natures.append({xCord:"minimum point"})
-            
+            else: 
+                natures.append(xCord:"point of Inflection")
         return (ReturnDict(solved=True, answer_string=natures))
     except:
         return (ReturnDict(False))
@@ -313,7 +314,9 @@ def yIntCalc(xCord, yCord, gradient):
     yInt = sp.solve(yIntEqn, c)
     yInt[0] = roundingPlaces(yInt[0])
     gradient = roundingPlaces(gradient)
-    if yInt[0]:
+    if yInt[0] == 0:
+        answer = f"y={gradient}x"
+    elif yInt[0] > 0:
         answer = f"y={gradient}x+{yInt[0]}"
     else:
         answer = f"y={gradient}x{yInt[0]}"

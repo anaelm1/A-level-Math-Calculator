@@ -30,7 +30,7 @@ def Trigonometry(method=None, mode="RAD", expression=None, range_lower=None, ran
                 case 1:
                     return Equations(mode, expression, range_lower, range_upper)
                 case 2:
-                    return Plotter(mode, expression, range_lower, range_upper)
+                    return Plotter(expression, mode, range_lower, range_upper)
                 case _:
                     return (ReturnDict(False))
         except:
@@ -39,7 +39,7 @@ def Trigonometry(method=None, mode="RAD", expression=None, range_lower=None, ran
         return (ReturnDict(False))
 
 
-def Equations(mode, expression, rangeower, range_uppper): #everything in Rad
+def Equations(mode, expression, range_lower, range_upper): #everything in Rad
     try:
         x = sp.Symbol("x")
         if mode == "DEG":

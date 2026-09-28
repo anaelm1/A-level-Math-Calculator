@@ -1,7 +1,7 @@
 ## A-level Scientific Calculator
 This project is made by Anael and Raphael. Organized by specific topics and question types, it is designed by A-Level students, for A-Level students, with the goal of simplifying math calculations.
 
-**Website:** https://
+**Website:** https://a-level-math-calculator.vercel.app/
 
 ## Overview
 # Topics included:
@@ -54,6 +54,7 @@ Anael:
     * Research purposes (as an alternative to Google Search).
     * Snippets of code of completely new concepts.
     * No direct copy-pasting without understanding.
+    * Final project debugging using cursor.
 Rapheal:
     * No AI for coding.
     * Debugging errors.

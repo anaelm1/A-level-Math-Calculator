@@ -44,7 +44,7 @@ def daFromtwoTerms(term1, term2):
         a, d = symbols('a d')
 
         eqn1 = Eq(a + (term1[0]-1)*d, term1[1])
-        eqn2 = Eq(a + (term2[0]-1)*d, term2[0])
+        eqn2 = Eq(a + (term2[0]-1)*d, term2[1])
 
         answer = []
         solution = solve((eqn1, eqn2), (a, d))
@@ -63,30 +63,16 @@ def sumFromda(n, d, a):
     except:
         return (ReturnDict(False))
 
-def sumFromtwoTerms(n, terms):
+def sumFromtwoTerms(n, term1, term2):
     try:
         a, d = symbols('a d')
 
-        #Getting n and nth value from my dict in a list data type
-        n1 = terms[0].keys() 
-        n1 = list(n1)
-        n1 = n1[0]
-        nth1 = terms[0][n1]
-        n1 = int(n1)
-        n2 = terms[1].keys() 
-        n2 = list(n2)
-        n2 = n2[0]
-        nth2 = terms[1][n2]
-        n2 = int(n2)
-
-        eqn1 = Eq(a + (n1-1)*d, nth1)
-        eqn2 = Eq(a + (n2-1)*d, nth2)
-
-        answer = []
+        eqn1 = Eq(a + (term1[0]-1)*d, term1[1])
+        eqn2 = Eq(a + (term2[0]-1)*d, term2[1])
         solution = solve((eqn1, eqn2), (a, d))
-        sum = (n/2) * (2*a + (n-1)*d)
 
-        answer = f'Sum to {n}th term is {roundingPlaces(sum)}'
+        total = (n/2) * (2*solution[a] + (n-1)*solution[d])
+        answer = f'Sum to {n}th term is {roundingPlaces(total)}'
         return (ReturnDict(True, answer_string = answer))
 
     except:
@@ -94,7 +80,7 @@ def sumFromtwoTerms(n, terms):
 
 def eqnFromda(d, a):
     try:
-        answer = f"nth  term = {roundingPlaces(a)} + (n - 1){roundingPlaces(d)}"
+        answer = f"nth  term = {roundingPlaces(a)} + (n - 1)*{roundingPlaces(d)}"
         return (ReturnDict(True, answer_string = answer))
     except: 
         return (ReturnDict(False))

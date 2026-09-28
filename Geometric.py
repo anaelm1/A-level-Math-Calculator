@@ -24,12 +24,12 @@ def Geometric(method=None, a=None, r=None, n=None, term1=None, term2=None):
         try:
             match method:
                 case 1: return nthTerm(n, r, a)
-                case 2: raFromtwoTerms(term1, term2)
-                case 3: sumFromra(n, r, a)
-                case 4: sumtoInfinity(term1, term2)
+                case 2: return raFromtwoTerms(term1, term2)
+                case 3: return sumFromra(n, r, a)
+                case 4: return sumtoInfinity(r, a)
         except:
             return (ReturnDict(solved=False))
-
+    return (ReturnDict(solved=False))
 def nthTerm(n, r, a):
     try:
         nth = a*r**(n-1)
@@ -47,7 +47,6 @@ def raFromtwoTerms(term1, term2):
         eqn2 = Eq(a*r**(term2[0]-1), term2[1])
         answer = []
         solution = solve((eqn1, eqn2), (a, r))
-        print(solution)
         for sol in solution:
             answer.append(f'a = {roundingPlaces(sol[0])}')
             answer.append(f'r = {roundingPlaces(sol[1])}')

@@ -51,11 +51,10 @@ PARAMETERS = {
     3.4: "Enter n, T1, T2" ,
     3.5: "Enter d, a" ,
 
-    4.1: "Enter n, d, a" ,
+    4.1: "Enter n, r, a" ,
     4.2: "Enter T1, T2" ,
-    4.3: "Enter n, d, a" ,
-    4.4: "Enter n, T1, T2" ,
-    4.5: "Enter d, a" ,
+    4.3: "Enter n, r, a" ,
+    4.4: "Enter r, a",
 
     5.1: "Enter Angle Mode, Exp, Start, Stop" ,
     5.2: "Enter Angle Mode, Exp, Start, Stop" ,
@@ -67,6 +66,7 @@ PARAMETERS = {
     6.5: "Enter Exp, X cords" ,
     6.6: "Enter Exp" ,
     6.7: "Enter Exp" ,
+    6.8: "Enter Exp" ,
 
     7.1: "Enter Exp, Coordinates" ,
     7.2: "Enter Exp, limits" }
@@ -82,13 +82,13 @@ def solveUserInput(topic, method,  rawInput):
     if topic == "Binomial":
         expression = prepareExpression(parts[0])
         if len(parts) > 1:
-            power = prepareExpression(parts[1]) 
+            power = prepareExpression(parts[1])
         else:
             None
         if len(parts) > 2:
             optRange = parts[2]
-        else:
-            None
+        else: 
+            None 
         return Binomial(method, expression, power, optRange)
 
     if topic == "Arithmetic":
@@ -104,10 +104,10 @@ def solveUserInput(topic, method,  rawInput):
         if method == 4:
             n = parseInt(parts[0])
             term1, term2 = parseTwoTerms(parts[1:])
-            return Arithmetic(4, n=n, d=d, a=a)
+            return Arithmetic(4, n=n, term1=term1, term2=term2)
         if method == 5:
             d, a = parseNumber(parts[0]), parseNumber(parts[1])
-            return Arithmetic(5, n=n, d=d, a=a)
+            return Arithmetic(5, d=d, a=a)
         return Arithmetic(method)
 
     if topic == "Geometric":
@@ -116,14 +116,14 @@ def solveUserInput(topic, method,  rawInput):
             return Geometric(1, n=n, r=r, a=a)
         if method == 2:
             term1, term2 = parseTwoTerms(parts)
-            return Geometric(2, n=n, r=r, a=a)
+            return Geometric(2, term1=term1, term2=term2)
         if method == 3:
             n, r, a = parseInt(parts[0]), parseNumber(parts[1]), parseNumber(parts[2])
             return Geometric(3, n=n, r=r, a=a)
         if method == 4:
-            n = parseInt(parts[0])
-            term1, term2 = parseTwoTerms(parts[1:])
-            return Geometric(4, term1=term1, term2=term2)
+            r, a = parseNumber(parts[0], parseNumber(parts[1]))
+            return Geometric(4, r=r, a=a)
+    return (ReturnDict(False))
 
     if topic == "Trigonometry":
         mode = parseMode(parts[0])
@@ -131,9 +131,9 @@ def solveUserInput(topic, method,  rawInput):
         lower = parseNumber(parts[2])
         upper = parseNumber(parts[3])
         if method == 1:
-            return Trigonometry(1, expression, lower, upper)
+            return Trigonometry(1, mode, expression, lower, upper)
         if method == 2: 
-            return Trigonometry(2, expression, lower, upper)
+            return Trigonometry(2, mode, expression, lower, upper)
         return ReturnDict(False)
 
     if topic == "Differentiation":
@@ -185,21 +185,9 @@ def index():
     if request.method == "POST":
         session["buttonNumber"] = request.form.get("subTopicId") 
         topic, session["subTopic"] = session["buttonNumber"].split(".")
-        match topic:
-            case 1:
-                session["topic"] = "Quadratics"
-            case 2:
-                session["topic"] = "Binomial"
-            case 3:
-                session["topic"] = "Arithmetic"
-            case 4:
-                session["topic"] = "Geometric"
-            case 5:
-                session["topic"] = "Trigonometry"
-            case 6:
-                session["topic"] = "Differentiation"
-            case 7:
-                session["topic"] = "Integration"
+        session["topic"] = TOPIC_NAMES.get(topic)
+        if not session["topic"]:
+            return redirect("/")
         return redirect("/grid")
     else: 
         return render_template("index.html")
@@ -207,7 +195,8 @@ def index():
 
 @app.route("/grid", methods=["GET", "POST"])
 def grid():
-    
+    if "buttonNumber" not in session:
+        return redirect("/")
     number = float(session['buttonNumber'])
     outputedString = PARAMETERS[number]
     if request.method == "POST":
@@ -231,28 +220,31 @@ def answer():
 
     userExpression = session.get("userExpression", "")
     try:
+        if session["topic"] == "Trigonometry" and int(session["subtopic"]) == 2:
+            return redirect("/graph")
         result = solveUserInput(session["topic"], int(session["subTopic"]), userExpression)
         outputedString = formatAnswer(result)
     except Exception:
         outputedString = "Could not solve. Check the input format shown above the display."
 
-    return render_template("answer.html",userExpression=userExpression, outputedString=outputedString)
+    return render_template("answer.html", userExpression=userExpression, outputedString=outputedString)
 
 
 @app.route("/graph")
 def graph():
-    userExpression = session['userExpression']
-    cleanedInput = inputCleaner(userExpression)
-    mode = session['mode']
-    lower = session['lowerLimit']
-    upper = session['upperLimit']
-
-    limit0Str = str(lower).replace("sp.", "math.")
-    limit1Str = str(upper).replace("sp.", "math.")
-    expression = expression.replace("sp.", "math.")
-
-    plotUrl = Plotter(cleanedInput, mode, [limit0Str, limit1Str])
-
+    if "userExpression" not in session:
+        return redirect("/")
+    userExpression = session["userExpression"]
+    parts = splitArgs(userExpression)
+    if len(parts) < 4:
+        return render_template("graph.html", plotUrl=None)
+    mode = parseMode(parts[0])
+    expression = prepareExpression(parts[1])
+    lower = parseNumber(parts[2])
+    upper = parseNumber(parts[3])
+    plotUrl = Plotter(expression, mode, lower, upper)
+    if isinstance(plotUrl, dict):
+        plotUrl = None
     return render_template("graph.html", plotUrl=plotUrl)
 
 if __name__ == "__main__":
