@@ -91,30 +91,30 @@ def prepareExpression(text):
     return cleaned
 
 def parseNumber(text):
-    expression = prepare_expression(text)
+    expression = prepareExpression(text)
     value = sp.N(sp.sympify(expression))
     return float(value)
 
 
 def parseInt(text):
-    return int(round(parse_number(text)))
+    return int(round(parseNumber(text)))
 
 
 def parseTerm(token):
     token = token.strip()
     if ":" in token:
         index, value = token.split(":", 1)
-        return [parse_int(index), parse_number(value)]
+        return [parseInt(index), parseNumber(value)]
     raise ValueError("Term must look like n:value, for example 3:10")
 
 
 def parseTwoTerms(tokens):
     if len(tokens) == 2:
-        return parse_term(tokens[0]), parse_term(tokens[1])
+        return parseTerm(tokens[0]), parseTerm(tokens[1])
     if len(tokens) == 4:
         return (
-            [parse_int(tokens[0]), parse_number(tokens[1])],
-            [parse_int(tokens[2]), parse_number(tokens[3])],
+            [parseInt(tokens[0]), parseNumber(tokens[1])],
+            [parseInt(tokens[2]), parseNumber(tokens[3])],
         )
     raise ValueError("Enter two terms as n:value, n:value or n, value, n, value")
 
