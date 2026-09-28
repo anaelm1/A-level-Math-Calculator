@@ -259,7 +259,7 @@ def natureOfStationaryPoint(expression, xCords, derivative=None):
             elif nature > 0:
                 natures.append({xCord:"minimum point"})
             else: 
-                natures.append(xCord:"point of Inflection")
+                natures.append({xCord:"point of Inflection"})
         return (ReturnDict(solved=True, answer_string=natures))
     except:
         return (ReturnDict(False))
