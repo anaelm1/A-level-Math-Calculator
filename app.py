@@ -21,7 +21,7 @@ from helperFunctions import *
 import math
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'local-development-fallback-key')
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'default_secret_key_for_dev')
 
 TOPIC_NAMES = {
     "1": "Quadratics",
