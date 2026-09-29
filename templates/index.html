@@ -10,7 +10,7 @@
         <header>
             <div class="headerholder">
                 <div class="design">^-^</div>
-                <div class="headerdiv">AS Level Calculator</div>
+                <div class="headerdiv"><a href="/">AS Level Calculator</a></div>
                 <div class="design"><33</div>
             </div>
         </header>
@@ -201,8 +201,10 @@
             if (activeMenues) {
                 activeMenues.forEach(activeMenu => {
                     if (activeMenu != topicButton) {
-                        const subTopicsELement = activeMenu.querySelector(".subTopics")
-                        subTopicsELement.remove()
+                        const subTopicsELement = activeMenu.querySelector(".subTopicsForm")
+                        if (subTopicsELement) {
+                            subTopicsELement.remove()
+                        }
                         activeMenu.querySelector('.arrowHolder').classList.remove('activeArrow')
                         activeMenu.classList.remove('activeTopic')
                     }

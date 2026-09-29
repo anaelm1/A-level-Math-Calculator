@@ -82,14 +82,8 @@ def solveUserInput(topic, method,  rawInput):
 
     if topic == "Binomial":
         expression = prepareExpression(parts[0])
-        if len(parts) > 1:
-            power = prepareExpression(parts[1])
-        else:
-            None
-        if len(parts) > 2:
-            optRange = parts[2]
-        else: 
-            None 
+        power = prepareExpression(parts[1]) if len(parts) > 1 else None
+        optRange = parts[2] if len(parts) > 2 else None
         return Binomial(method, expression, power, optRange)
 
     if topic == "Arithmetic":
@@ -122,9 +116,9 @@ def solveUserInput(topic, method,  rawInput):
             n, r, a = parseInt(parts[0]), parseNumber(parts[1]), parseNumber(parts[2])
             return Geometric(3, n=n, r=r, a=a)
         if method == 4:
-            r, a = parseNumber(parts[0], parseNumber(parts[1]))
+            r, a = parseNumber(parts[0]), parseNumber(parts[1])
             return Geometric(4, r=r, a=a)
-    return (ReturnDict(False))
+        return (ReturnDict(False))
 
     if topic == "Trigonometry":
         mode = parseMode(parts[0])
@@ -221,7 +215,7 @@ def answer():
 
     userExpression = session.get("userExpression", "")
     try:
-        if session["topic"] == "Trigonometry" and int(session["subtopic"]) == 2:
+        if session["topic"] == "Trigonometry" and int(session["subTopic"]) == 2:
             return redirect("/graph")
         result = solveUserInput(session["topic"], int(session["subTopic"]), userExpression)
         outputedString = formatAnswer(result)

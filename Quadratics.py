@@ -21,7 +21,7 @@ import math
 from sympy import *
 from helperFunctions import *
 
-x = sp.Symbol('x')
+x = Symbol('x')
 
 
 def Quadratics(method=None, expression=None): #TODO: I need to make the input more user friendly as the current formating is ** for powers
@@ -89,7 +89,7 @@ def CompletingSquare(a, b, c): #answerstring[0] = factored form, answerstring[1]
             k_str = ""
 
         if a == 1 or a == 1.0:
-            target_a = a
+            target_a = ""
         elif a == -1 or a == -1.0:
             target_a = "-"
         else: 

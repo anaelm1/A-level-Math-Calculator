@@ -216,7 +216,7 @@ def unknownVariableWithXCord(expression, gradient, xCord, givenRange=None):
         else:
             for value in unknownValues:
                 if value.is_real:
-                    Values.append(value)
+                    Values.append(roundingPlaces(value))
         return (ReturnDict(solved=True, answer_string=Values))
     except:
         return (ReturnDict(False))

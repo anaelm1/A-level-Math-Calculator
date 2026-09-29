@@ -183,34 +183,18 @@ return a STRING with the right answers
 def unknownExpansion2Brackets(expression, xTerm, rangeQues=None):
     try:
         varName = unknownVariableFind(expression)
-        expressions = expression.split(" * ")
-        if unknownVariableFind(expressions[0]):
-            unknownVariableFind(expressions[0])
-        else:
-            unknownVariableFind(expressions[1])
-        exp1 = sp.expand(sp.sympify(expressions[0]))
-        exp2 = sp.expand(sp.sympify(expressions[1]))
-        terms1 = sp.Add.make_args(exp1)
-        terms2 = sp.Add.make_args(exp2)
+        if not varName:
+            return ReturnDict(False)
         termCoeff, termPower = sp.sympify(xTerm).as_coeff_exponent(x)
-        newEqn = ""
-        for i in terms1:
-            for j in terms2:
-                power1 = sp.sympify(i).as_coeff_exponent(x)[1]
-                power2 = sp.sympify(j).as_coeff_exponent(x)[1]
-                if power1 + power2 == termPower:
-                    newTerm = str(i*j)
-                    termIndex = newTerm.find("*x**"+str(termPower))
-                    newTerm = newTerm[0:termIndex]
-                    if newTerm[0] != "-":
-                        newTerm = "+"+ newTerm
-                    newEqn += newTerm
-        newEqn = sp.Eq(sp.sympify(newEqn), termCoeff)
-        aFind = sp.solve(newEqn, varName)
+        expanded = sp.expand(sp.sympify(expression))
+        coeff = sp.Poly(expanded, x).coeff_monomial(x**termPower)
+        aFind = sp.solve(sp.Eq(coeff, termCoeff), varName)
         answer = rangeCheck(aFind, rangeQues)
-        return (ReturnDict(solved=True, answer_string=answer))
+        if not answer:
+            return ReturnDict(False)
+        return ReturnDict(solved=True, answer_string=answer)
     except:
-        return (ReturnDict(False))
+        return ReturnDict(False)
         
 
 

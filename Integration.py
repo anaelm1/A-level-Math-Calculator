@@ -41,10 +41,11 @@ def eqnIntegration(expression, Coordinates):
                 value = roundingPlaces(value)
                 if value > 0:
                     equation = str(integral) + " + " + str(value)
-                    equations.append(equation)
+                elif value < 0:
+                    equation = str(integral) + " - " + str(abs(value))
                 else:
-                    equation = str(integral) + str(value)
-                    equations.append(equation)
+                    equation = str(integral)
+                equations.append(equation)
         return (ReturnDict(True, equations))
     except:
         return (ReturnDict(False))

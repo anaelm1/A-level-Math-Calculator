@@ -119,7 +119,7 @@
         <header>
     <div class="headerholder">
         <div class="design">^-^</div>
-        <div class="headerdiv">AS Level Calculator</div>
+        <div class="headerdiv"><a href="/">AS Level Calculator</a></div>
         <div class="design"><33</div>
     </div>
 </header>
@@ -150,8 +150,8 @@
                     <button type="button" class="key-btn btn-func grid-buttons" id="btn_pi" data-val="π">π</button>
                 </div>
                 <div class="button-rows">
-                    <button type="button" class="key-btn btn-func grid-buttons" id="btn_cbrt" data-val="√(">∛</button>
-                    <button type="button" class="key-btn btn-func grid-buttons" id="btn_cube" data-val="^2">x³</button>
+                    <button type="button" class="key-btn btn-func grid-buttons" id="btn_cbrt" data-val="∛(">∛</button>
+                    <button type="button" class="key-btn btn-func grid-buttons" id="btn_cube" data-val="^3">x³</button>
                     <button type="button" class="key-btn btn-func grid-buttons" id="btn_pow" data-val="^">xⁿ</button>
                     <button type="button" class="key-btn btn-func grid-buttons" id="btn_equalto" data-val="=">=</button>
                 </div>
@@ -187,7 +187,7 @@
                 </div>
                 <div class="button-rows last-row">
                     <button type="button" class="key-btn btn-num grid-buttons" id="btn_0" data-val="0">0</button>
-                    <button type="button" class="key-btn btn-num grid-buttons" id="btn_dot" data-val="*">.</button>
+                    <button type="button" class="key-btn btn-num grid-buttons" id="btn_dot" data-val=".">.</button>
                     <button type="submit" name="solve" class="btn-op grid-buttons big-btn" id="btn_solve" value="True">Solve</button>
                 </div>
             </div>
@@ -222,7 +222,7 @@
                             button.setAttribute("data-val", next)
                             button.textContent = next;
                             inputField.value += next;
-                            inputhistory.push(next.length);
+                            inputHistory.push(next.length);
                         }
                         else {
                             inputField.value += value;
